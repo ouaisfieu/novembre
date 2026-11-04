@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observatoire de la Crise Politique & Budgétaire Belge (2024-2026)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            800: '#166534',
+                        },
+                        belgianRed: '#dc2626',
+                        belgianYellow: '#d97706',
+                        belgianDark: '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 380px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-amber-200">
+
+<!-- Chosen Palette: Warm Neutral Harmonious (Slate background #f8fafc, Deep Navy #0f172a headers, Crimson #dc2626 crisis accents, Amber #d97706 alerts, Emerald #059669 balance points) -->
+
+<!-- Application Structure Plan:
+     1. Banner & Sticky Navigation: Global crisis status alert (De Wever resignation / Royal mediation) and quick navigation tabs.
+     2. Section 1: Executive Dashboard & Interactive Chronology (2024-2026 timeline and key indicators).
+     3. Section 2: Macroeconomic & Fiscal Impasse (EU PDE procedure, S&P downgrade, OLO rates Chart.js, and interactive "Kern Red Lines" comparison matrix).
+     4. Section 3: Structural Reforms Lab (Interactive Pension Bonus/Malus simulator, Unemployment limitation rules, labor flexi-jobs).
+     5. Section 4: Cascading Regional Impacts & "Confederalism" (Interactive regional deep-dive: Brussels 615d crisis, Wallonia/FWB tuition hikes, CPAS/RIS shift).
+     6. Section 5: Political Polarization & Electoral Intentions (Polling Chart.js, 2029 systemic impasse critical breakdown).
+     Why this structure? It transitions logically from the immediate news context (November 2026 resignation) to underlying financial causes, concrete structural impacts on citizens, regional cascading effects, and long-term electoral paralysis. -->
+
+<!-- Visualization & Content Choices:
+     - Deficit/Debt Trajectory: Chart.js Line Chart with thresholds (3% EU limit vs projections 2024-2031).
+     - OLO 10Y Yields & Interest Burden: Chart.js Bar + Line combo showing rate escalation (4.43%).
+     - Polling Intentions 2026: Chart.js Grouped Bar chart comparing North, South, and Capital regions.
+     - Red Lines at the Kern: Dynamic JS tabbed comparison Matrix between Arizona coalition parties.
+     - Pension Rule Interactive Tool: JS-powered calculator checking the 35 years / 7020 days condition.
+     - NO SVG graphics or icons used. NO Mermaid JS used. Structured HTML/CSS Unicode badges and Canvas elements only. -->
+
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Header / Banner -->
+    <header class="bg-slate-900 text-white border-b border-slate-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between py-3 gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-600 text-white animate-pulse">
+                        &#9888; CRIME BUDGETAIRE - NOV 2026
+                    </span>
+                    <h1 class="text-lg md:text-xl font-bold tracking-tight text-slate-100">
+                        Belgique 2026 : Observatoire de la Crise
+                    </h1>
+                </div>
+                <!-- Navigation Tabs -->
+                <nav class="flex items-center gap-1 overflow-x-auto custom-scrollbar pb-1 md:pb-0 text-xs sm:text-sm font-medium text-slate-300">
+                    <button onclick="scrollToSection('dashboard')" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-white transition whitespace-nowrap bg-slate-800 text-white">Synthese & Chronologie</button>
+                    <button onclick="scrollToSection('macro')" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-white transition whitespace-nowrap">Macro & Blocage Kern</button>
+                    <button onclick="scrollToSection('reforms')" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-white transition whitespace-nowrap">Simulateur Réformes</button>
+                    <button onclick="scrollToSection('regions')" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-white transition whitespace-nowrap">Impacts Régionaux</button>
+                    <button onclick="scrollToSection('elections')" class="px-3 py-1.5 rounded-lg hover:bg-slate-800 hover:text-white transition whitespace-nowrap">Échiquier Électoral</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- SECTION 1: SYNTHÈSE EXECUTIVE & CHRONOLOGIE -->
+        <section id="dashboard" class="space-y-6">
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-600">Vue d'ensemble de la situation au 4 Novembre 2026</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mt-1">L'Anatomie d'une Polycrise Institutionnelle et Budgétaire</h2>
+                    <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                        Cette section synthétise l'urgence politique déclenchée le 2 novembre 2026 par la démission en suspens du Premier ministre Bart De Wever face à l'impossibilité de boucler le budget 2027. Découvrez les métriques clés de la crise et explorez la chronologie des événements ayant conduit à l'impasse fédérale.
+                    </p>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center hover:border-amber-400 transition cursor-pointer" onclick="showKpiDetail('deficit')">
+                        <span class="text-xs text-slate-500 font-semibold uppercase">Déficit Public 2025</span>
+                        <div class="text-2xl font-black text-red-600 mt-1">5,2 %</div>
+                        <span class="text-[10px] text-red-700 bg-red-100 px-1.5 py-0.5 rounded font-medium">Seuil UE : 3,0 %</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center hover:border-amber-400 transition cursor-pointer" onclick="showKpiDetail('dette')">
+                        <span class="text-xs text-slate-500 font-semibold uppercase">Dette Publique</span>
+                        <div class="text-2xl font-black text-slate-800 mt-1">107 %</div>
+                        <span class="text-[10px] text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded font-medium">Cap sur 122% en 2031</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center hover:border-amber-400 transition cursor-pointer" onclick="showKpiDetail('sp')">
+                        <span class="text-xs text-slate-500 font-semibold uppercase">Note S&P Global</span>
+                        <div class="text-2xl font-black text-amber-600 mt-1">AA-</div>
+                        <span class="text-[10px] text-red-700 bg-red-100 px-1.5 py-0.5 rounded font-medium">Dégradée en Avril 2026</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center hover:border-amber-400 transition cursor-pointer" onclick="showKpiDetail('olo')">
+                        <span class="text-xs text-slate-500 font-semibold uppercase">Taux OLO 10 Ans</span>
+                        <div class="text-2xl font-black text-red-600 mt-1">4,43 %</div>
+                        <span class="text-[10px] text-red-700 bg-red-100 px-1.5 py-0.5 rounded font-medium">Plus haut depuis 2012</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center hover:border-amber-400 transition cursor-pointer" onclick="showKpiDetail('chomage')">
+                        <span class="text-xs text-slate-500 font-semibold uppercase">Plafond Chômage</span>
+                        <div class="text-2xl font-black text-slate-800 mt-1">24 Mois</div>
+                        <span class="text-[10px] text-slate-600 bg-slate-200 px-1.5 py-0.5 rounded font-medium">Fin du droit illimité</span>
+                    </div>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center hover:border-amber-400 transition cursor-pointer" onclick="showKpiDetail('bxl')">
+                        <span class="text-xs text-slate-500 font-semibold uppercase">Crise Bruxelloise</span>
+                        <div class="text-2xl font-black text-slate-800 mt-1">615 Jours</div>
+                        <span class="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded font-medium">Gov Dilliès (Fév 2026)</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic KPI Info Box -->
+                <div id="kpi-detail-box" class="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 hidden">
+                    <span class="font-bold block mb-1 text-sm" id="kpi-title">Détail du KPI</span>
+                    <p id="kpi-text" class="leading-relaxed"></p>
+                </div>
+
+                <!-- Interactive Timeline -->
+                <div class="mt-8">
+                    <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <span>&#128197;</span> Chronologie Interactive de la Crise (Juin 2024 - Novembre 2026)
+                    </h3>
+                    <div class="relative border-l-2 border-slate-200 ml-3 space-y-6 pl-6">
+                        <!-- Timeline Item 1 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-white"></div>
+                            <span class="text-xs font-bold text-amber-600">9 Juin 2024</span>
+                            <h4 class="text-sm font-bold text-slate-800">Élections Triples & Séisme Électoral</h4>
+                            <p class="text-xs text-slate-600 mt-1">La N-VA contient le Vlaams Belang en Flandre. Le MR et Les Engagés l'emportent au Sud, évinçant le PS du pouvoir régional wallon.</p>
+                        </div>
+                        <!-- Timeline Item 2 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-red-600 border-2 border-white"></div>
+                            <span class="text-xs font-bold text-red-600">26 Juillet 2024</span>
+                            <h4 class="text-sm font-bold text-slate-800">Procédure UE pour Déficit Excessif</h4>
+                            <p class="text-xs text-slate-600 mt-1">La Commission européenne place officiellement la Belgique sous procédure d'infraction budgétaire, exigeant 11 milliards € d'ajustement.</p>
+                        </div>
+                        <!-- Timeline Item 3 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-white"></div>
+                            <span class="text-xs font-bold text-slate-600">3 Février 2025</span>
+                            <h4 class="text-sm font-bold text-slate-800">Prestation de Serment de la Coalition "Arizona"</h4>
+                            <p class="text-xs text-slate-600 mt-1">Après 239 jours de négociation, Bart De Wever devient Premier ministre d'un gouvernement quintipartite (N-VA, MR, Les Engagés, CD&V, Vooruit).</p>
+                        </div>
+                        <!-- Timeline Item 4 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-amber-600 border-2 border-white"></div>
+                            <span class="text-xs font-bold text-amber-600">24 Avril 2026</span>
+                            <h4 class="text-sm font-bold text-slate-800">Dégradation par S&P Global Ratings</h4>
+                            <p class="text-xs text-slate-600 mt-1">La note de la dette souveraine belge passe de 'AA' à 'AA-'. S&P dénonce l'incapacité à réformer la structure des dépenses publiques.</p>
+                        </div>
+                        <!-- Timeline Item 5 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-slate-900 border-2 border-white"></div>
+                            <span class="text-xs font-bold text-slate-600">1er Juin 2026</span>
+                            <h4 class="text-sm font-bold text-slate-800">Promulgation de la Réforme des Pensions</h4>
+                            <p class="text-xs text-slate-600 mt-1">Instauration de la règle d'or des 35 ans / 7020 jours effectifs pour échapper au Malus de pension de 5% par an d'anticipation.</p>
+                        </div>
+                        <!-- Timeline Item 6 -->
+                        <div class="relative group">
+                            <div class="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full bg-red-600 border-2 border-white"></div>
+                            <span class="text-xs font-bold text-red-600">2 Novembre 2026</span>
+                            <h4 class="text-sm font-bold text-slate-800">Échec du Kern & Démission de Bart De Wever</h4>
+                            <p class="text-xs text-slate-600 mt-1">Impossibilité de trancher l'effort de 10 milliards €. Le Roi Philippe tient la démission "en suspens" et entame des consultations d'urgence.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: MACROÉCONOMIE & BLOCAGE DU KERN -->
+        <section id="macro" class="space-y-6">
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold uppercase tracking-wider text-red-600">Analyse Financière & Politique</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mt-1">L'Impasse Budgétaire et le Clash des Lignes Rouges</h2>
+                    <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                        Cette section explore les données budgétaires critiques (déficit, dette, taux OLO) imposées par la Commission Européenne et la Banque Nationale (BNB), ainsi que le choc idéologique qui a détruit la coalition au Kern entre la droite libérale (MR) et la gauche sociodémocrate (Vooruit).
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <!-- Chart Container 1: Trajectoire Budgétaire -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                        <h3 class="text-sm font-bold text-slate-800 mb-2 text-center">Projections de la Dette et Déficit Public (2024-2031)</h3>
+                        <div class="chart-container">
+                            <canvas id="chartDeficit"></canvas>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-2 text-center">
+                            Source : Bureau fédéral du Plan / BNB / S&P Ratings. Sans ajustement, la dette franchira 122% d'ici 2031.
+                        </p>
+                    </div>
+
+                    <!-- Chart Container 2: Taux OLO -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                        <h3 class="text-sm font-bold text-slate-800 mb-2 text-center">Rendement OLO 10 Ans & Charge d'Intérêts</h3>
+                        <div class="chart-container">
+                            <canvas id="chartOlo"></canvas>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-2 text-center">
+                            Taux des OLO belges à 10 ans grimpant à 4,43 %, alourdissant la charge de la dette à 2,8% du PIB en 2029.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Kern Simulator / Red Lines Matrix -->
+                <div class="mt-8 bg-slate-900 text-white rounded-xl p-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-amber-400 uppercase">Analyse Interactive du Blocage</span>
+                            <h3 class="text-lg font-bold text-slate-100">Le Choc des Lignes Rouges au Kern (Budget 2027)</h3>
+                        </div>
+                        <span class="text-xs text-slate-400">Cliquez sur un parti pour analyser ses exigences incompressibles</span>
+                    </div>
+
+                    <!-- Party Selector Tabs -->
+                    <div class="flex flex-wrap gap-2 mt-4" id="party-tabs">
+                        <button onclick="selectParty('MR')" id="tab-MR" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white transition">MR (G.L. Bouchez)</button>
+                        <button onclick="selectParty('Vooruit')" id="tab-Vooruit" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">Vooruit (C. Rousseau)</button>
+                        <button onclick="selectParty('NVA')" id="tab-NVA" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">N-VA (B. De Wever)</button>
+                        <button onclick="selectParty('Engages')" id="tab-Engages" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">Les Engagés (Y. Verougstraete)</button>
+                        <button onclick="selectParty('CDV')" id="tab-CDV" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition">CD&V (S. Mahdi)</button>
+                    </div>
+
+                    <!-- Dynamic Party Content -->
+                    <div id="party-details" class="mt-4 bg-slate-800 border border-slate-700 rounded-lg p-4 space-y-3">
+                        <!-- Loaded dynamically via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: REFORMES STRUCTURELLES -->
+        <section id="reforms" class="space-y-6">
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Laboratoire des Réformes Arizona</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mt-1">Pensions, Chômage & Flexibilisation du Travail</h2>
+                    <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                        Le gouvernement Arizona a promulgué deux réformes majeures modifiant le contrat social belge : le système de Bonus-Malus sur les pensions et la limitation historique des allocations de chômage à 24 mois. Utilisez les outils interactifs ci-dessous pour comprendre l'impact direct de ces mesures.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Pension Simulator -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
+                        <div class="border-b border-slate-200 pb-2">
+                            <span class="text-xs font-bold text-amber-600 uppercase">&#128269; Testeur d'Éligibilité</span>
+                            <h3 class="text-base font-bold text-slate-800">Simulateur Malus / Bonus Pension (Loi 2026)</h3>
+                        </div>
+                        <p class="text-xs text-slate-600">
+                            La règle d'or exige <strong>35 années de carrière effective</strong> (avec au moins 156 jours/an, soit 7 020 jours au total) pour éviter le Malus lors d'un départ anticipé.
+                        </p>
+
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">Nombre d'années de travail effectif (>= 156j/an) :</label>
+                                <input type="number" id="pension-years" value="33" min="10" max="45" class="w-full p-2 border border-slate-300 rounded-lg bg-white text-slate-800 font-bold focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div>
+                                <label class="block font-semibold text-slate-700 mb-1">Âge prévu du départ à la retraite :</label>
+                                <select id="pension-age" class="w-full p-2 border border-slate-300 rounded-lg bg-white text-slate-800 font-bold">
+                                    <option value="63">63 ans (Anticipé - 3 ans avant)</option>
+                                    <option value="64">64 ans (Anticipé - 2 ans avant)</option>
+                                    <option value="65">65 ans (Anticipé - 1 an avant)</option>
+                                    <option value="66" selected>66 ans (Âge légal 2026)</option>
+                                    <option value="67">67 ans (Anticipé post-2030 / Prolongé)</option>
+                                </select>
+                            </div>
+                            <button onclick="calculatePensionImpact()" class="w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition shadow-sm">
+                                Calculer la Sanction / Bonification
+                            </button>
+                        </div>
+
+                        <!-- Result Box -->
+                        <div id="pension-result" class="p-3 bg-white border border-slate-200 rounded-lg text-xs hidden">
+                            <!-- JS Inject -->
+                        </div>
+                    </div>
+
+                    <!-- Unemployment Limitation Diagram -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
+                        <div class="border-b border-slate-200 pb-2">
+                            <span class="text-xs font-bold text-red-600 uppercase">&#9888; Fin de l'Illimitation</span>
+                            <h3 class="text-base font-bold text-slate-800">Mécanisme de Limitation du Chômage à 24 Mois</h3>
+                        </div>
+                        <p class="text-xs text-slate-600">
+                            Depuis mars 2026, la Belgique a abrogé la mensualisation indéfinie. Le droit est scindé en deux tranches strictes reposant sur le passé professionnel.
+                        </p>
+
+                        <div class="space-y-2">
+                            <div class="p-3 bg-white border-l-4 border-emerald-500 rounded-r-lg shadow-sm">
+                                <div class="text-xs font-bold text-slate-800">Mois 1 à 12 : Période de Base Inaliénable</div>
+                                <div class="text-[11px] text-slate-500 mt-0.5">Droit ouvert à tout demandeur d'emploi qualifié. Taux dégressifs standard.</div>
+                            </div>
+                            <div class="p-3 bg-white border-l-4 border-amber-500 rounded-r-lg shadow-sm">
+                                <div class="text-xs font-bold text-slate-800">Mois 13 à 24 : Prolongation Conditionnelle</div>
+                                <div class="text-[11px] text-slate-500 mt-0.5">Calculé selon le passé : +1 mois d'allocation par tranche de 104 jours travaillés au-delà du seuil initial.</div>
+                            </div>
+                            <div class="p-3 bg-white border-l-4 border-red-500 rounded-r-lg shadow-sm">
+                                <div class="text-xs font-bold text-slate-800">Mois 25+ : Exclusions & Redirection vers les CPAS</div>
+                                <div class="text-[11px] text-slate-500 mt-0.5">Fin irrévocable des indemnités ONEM. Basculement des chômeurs vers le Revenu d'Intégration Sociale (RIS) municipal.</div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-900">
+                            <strong>Rupture du Dialogue Social :</strong> Face à cette mesure et à la généralisation des flexi-jobs (plafond à 18 000€), la FGTB et la CSC ont décrété la grève générale. Le groupe des 10 est paralysé et le patronat (Agoria) refuse de négocier les accords sectoriels.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: IMPACTS RÉGIONAUX -->
+        <section id="regions" class="space-y-6">
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Architecture Fédérale & Territoires</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mt-1">L'Austérité en Cascade & le "Confédéralisme Rampant"</h2>
+                    <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                        L'assainissement budgétaire fédéral transfère mécaniquement les charges financières vers les entités fédérées et les communes (CPAS). Explorez les spécificités régionales, de la crise bruxelloise résolue après 615 jours aux hausses de minerval en Fédération Wallonie-Bruxelles.
+                    </p>
+                </div>
+
+                <!-- Region Interactive Selector Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <button onclick="showRegionDetail('bxl')" id="btn-reg-bxl" class="p-4 rounded-xl border border-blue-200 bg-blue-50 hover:bg-blue-100 transition text-left">
+                        <span class="text-xs font-bold text-blue-800 uppercase block">Bruxelles-Capitale</span>
+                        <span class="text-sm font-bold text-slate-900 mt-1 block">Gov. Dilliès (Fév 2026)</span>
+                        <span class="text-[11px] text-slate-600 mt-1 block">Fin de 615j de vacance / Coupe 719M€</span>
+                    </button>
+                    <button onclick="showRegionDetail('wal')" id="btn-reg-wal" class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition text-left">
+                        <span class="text-xs font-bold text-slate-800 uppercase block">Wallonie</span>
+                        <span class="text-sm font-bold text-slate-900 mt-1 block">Gov. Dolimont (MR-Eng)</span>
+                        <span class="text-[11px] text-slate-600 mt-1 block">Rigueur -538M€ / Droits 3%</span>
+                    </button>
+                    <button onclick="showRegionDetail('fwb')" id="btn-reg-fwb" class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition text-left">
+                        <span class="text-xs font-bold text-slate-800 uppercase block">Fédération Wallonie-Bxl</span>
+                        <span class="text-sm font-bold text-slate-900 mt-1 block">Gov. Degryse</span>
+                        <span class="text-[11px] text-slate-600 mt-1 block">Minerval porté à 1 194 €</span>
+                    </button>
+                    <button onclick="showRegionDetail('cpas')" id="btn-reg-cpas" class="p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition text-left">
+                        <span class="text-xs font-bold text-slate-800 uppercase block">Pouvoirs Locaux / CPAS</span>
+                        <span class="text-sm font-bold text-slate-900 mt-1 block">Transfert de la Précarité</span>
+                        <span class="text-[11px] text-slate-600 mt-1 block">RIS Isolé à 1 367,34 €</span>
+                    </button>
+                </div>
+
+                <!-- Detailed Region Information Display Box -->
+                <div id="region-display-box" class="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+                    <!-- Dynamic Loading -->
+                </div>
+
+                <!-- Confederalism Analysis Panel -->
+                <div class="mt-6 p-4 bg-slate-900 text-slate-200 rounded-xl space-y-2 text-xs">
+                    <span class="text-amber-400 font-bold uppercase text-[11px]">&#128266; Analyse Stratégique : Confédéralisme de Fait</span>
+                    <p class="leading-relaxed">
+                        Pour de nombreux politologues (CRISP), le désengagement financier de l'État fédéral (réduction unilatérale de l'intervention dans Beliris, la recherche et l'aide sociale) contraint mécaniquement les Régions à assumer des déficits structurels. Cette stratégie de Bart De Wever réalise, par l'épuisement financier du niveau central, l'autonomie régionale forcée que les réformes constitutionnelles n'ont pas pu formaliser.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: ÉCHIQUIER POLITIQUE & SONDAGES -->
+        <section id="elections" class="space-y-6">
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div class="border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold uppercase tracking-wider text-purple-600">Polarisation & Intentions de Vote</span>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mt-1">L'Échiquier Politique Post-Ajustement (Sondages 2026)</h2>
+                    <p class="text-slate-600 text-sm mt-2 leading-relaxed">
+                        La conduite des politiques d'austérité et la paralysie du gouvernement ont provoqué une refragmentation électorale majeure. On observe une percée historique du PTB à Bruxelles, le maintien de la domination du Vlaams Belang en Flandre, et le retour du PS en tête en Wallonie.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Polling Chart Container -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                        <h3 class="text-sm font-bold text-slate-800 mb-2 text-center">Intention de Vote par Région (Sondages Automne 2026)</h3>
+                        <div class="chart-container">
+                            <canvas id="chartPolling"></canvas>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-2 text-center">
+                            Baromètre Ipsos/Le Soir. Illustration de l'asymétrie politique croissante entre les trois régions.
+                        </p>
+                    </div>
+
+                    <!-- Electoral Analysis Breakdown -->
+                    <div class="space-y-4 text-xs">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                            <span class="font-bold text-slate-900 block text-sm">Flandre : Hégémonie Nationaliste (~25,1%)</span>
+                            <p class="text-slate-600 leading-relaxed">
+                                Le Vlaams Belang demeure en tête, talonné par la N-VA (~22%). Les libéraux flamands (ex-Open VLD, devenus Anders) s'effondrent sous le seuil des 7%.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                            <span class="font-bold text-slate-900 block text-sm">Bruxelles : Le Choc PTB (~25,5%)</span>
+                            <p class="text-slate-600 leading-relaxed">
+                                Pour la première fois, la gauche marxiste (PTB) devient la première force politique de la capitale, devançant le PS (18,3%) et reléguant le MR (13,9%) suite aux coupes budgétaires urbaines.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-1">
+                            <span class="font-bold text-slate-900 block text-sm">Wallonie : Résurgence du PS (~23,9%)</span>
+                            <p class="text-slate-600 leading-relaxed">
+                                Le PS tire profit du mécontentement face aux gouvernements régionaux et fédéraux de centre-droit, repassant devant le MR (20%).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conclusion Note -->
+                <div class="mt-6 p-5 bg-red-50 border border-red-200 rounded-xl text-xs text-red-950 space-y-2">
+                    <span class="font-bold text-sm block text-red-900">&#9888; Diagnostic de Paralysie Systémique</span>
+                    <p class="leading-relaxed">
+                        L'absence d'alternative crédible constitue le seul ciment qui maintient artificiellement les partis au pouvoir. Une dissolution de la Chambre et des élections anticipées ne feraient qu'amplifier les extrêmes, rendant toute majorité fédérale future encore plus improbable à l'horizon 2029.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>Observatoire Synthétique sur la Situation Politique et Budgétaire Belge — Données au 4 Novembre 2026</p>
+            <p class="text-slate-500">Document interactif généré à des fins d'analyse d'information et de médiation publique.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Smooth scroll to sections
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                const offset = 80;
+                const bodyRect = document.body.getBoundingClientRect().top;
+                const elementRect = el.getBoundingClientRect().top;
+                const elementPosition = elementRect - bodyRect;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // KPI Interactive Details
+        const kpiData = {
+            deficit: {
+                title: "Déficit Public de 5,2 % en 2025",
+                text: "Le déficit s'est fortement détérioré sous l'effet du coût des pensions et de l'alourdissement de la charge d'intérêts. La Belgique dépasse largement le plafond européen de 3 %, déclenchant une Procédure pour Déficit Excessif de la Commission UE."
+            },
+            dette: {
+                title: "Dette Publique à 107 % du PIB",
+                text: "Sans ajustement de 11 milliards d'euros, le Bureau fédéral du Plan prévoit que la dette franchira 122 % d'ici 2031 et plus de 130 % en 2038, exposant le pays à une spirale de refinancing."
+            },
+            sp: {
+                title: "Note S&P dégradée à AA- (Avril 2026)",
+                text: "S&P Global Ratings a sanctionné l'incapacité de l'État fédéral à mettre en œuvre un assainissement budgétaire crédible en raison de la fragmentation institutionnelle et politique."
+            },
+            olo: {
+                title: "Taux Obligataire OLO à 10 ans à 4,43 %",
+                text: "Les taux souverains ont atteint leur niveau le plus élevé depuis la crise de la zone euro en 2012, augmentant le coût annuel de rééchelonnement de la dette de plusieurs centaines de millions d'euros."
+            },
+            chomage: {
+                title: "Limitation des Allocations à 24 Mois",
+                text: "La Belgique a mis fin à l'illimitation historique du chômage. Les chômeurs arrivant au terme de leurs 24 mois sont basculés vers le Revenu d'Intégration Sociale (RIS) géré par les CPAS communaux."
+            },
+            bxl: {
+                title: "Fin de 615 Jours de Crise à Bruxelles",
+                text: "Après la plus longue vacance exécutive régionale de l'histoire (juin 2024 - février 2026), le Gouvernement Dilliès (MR-PS-Engagés / Groen-Vooruit-Anders-CD&V) a pris ses fonctions avec un plan de rigueur d'urgence."
+            }
+        };
+
+        function showKpiDetail(key) {
+            const box = document.getElementById('kpi-detail-box');
+            const title = document.getElementById('kpi-title');
+            const text = document.getElementById('kpi-text');
+
+            if (kpiData[key]) {
+                title.innerText = kpiData[key].title;
+                text.innerText = kpiData[key].text;
+                box.classList.remove('hidden');
+            }
+        }
+
+        // Red Lines Party Matrix Data
+        const partyData = {
+            MR: {
+                leader: "Georges-Louis Bouchez & David Clarinval",
+                line: "Absolue opposition à toute hausse d'impôt (TVA ou plus-values).",
+                demands: "L'intégralité de l'effort de 10 milliards € doit provenir de la baisse des dépenses de l'État et de la sécurité sociale. Refus catégorique de la hausse de la TVA proposée par De Wever.",
+                status: "A provoqué le blocage du Kern face aux exigences fiscales de Vooruit."
+            },
+            Vooruit: {
+                leader: "Conner Rousseau",
+                line: "Exigence d'une contribution des plus hauts patrimoines & protection des soins de santé.",
+                demands: "Conditionne la participation de la seule force de gauche à l'instauration d'une taxe sur les plus-values financières (1.5 à 2 milliards €) et au maintien de la norme de croissance de 6.2% des soins de santé.",
+                status: "Pose son veto sur un budget reposant uniquement sur les coupes sociales."
+            },
+            NVA: {
+                leader: "Bart De Wever (Premier ministre démissionnaire)",
+                line: "Rigueur budgétaire stricte et responsabilisation des Régions.",
+                demands: "Plan de consolidation mixte (coupes dans le fonctionnement étatique, hausse ciblée de la TVA). Souhaite éviter le régime des douzièmes provisoires qui paralyserait le pays.",
+                status: "A présenté sa démission au Roi Philippe le 2 novembre 2026."
+            },
+            Engages: {
+                leader: "Yvan Verougstraete",
+                line: "Protection des services publics et soutien aux classes moyennes.",
+                demands: "Refus des coupes aveugles dans les soins de santé tout en soutenant l'assainissement global. Cherche un compromis entre le MR et Vooruit.",
+                status: "En consultation urgente au Palais Royal."
+            },
+            CDV: {
+                leader: "Sammy Mahdi",
+                line: "Soutien aux familles et fiscalité juste sur le travail.",
+                demands: "Protection des allocations familiales et soutien aux investissements de soin. S'oppose à une austérité disproportionnée sur les bénéficiaires de soins.",
+                status: "Inquiet du risque de sur-polarisation électorale en Flandre face au VB."
+            }
+        };
+
+        function selectParty(partyKey) {
+            // Update tabs UI
+            const partyKeys = ['MR', 'Vooruit', 'NVA', 'Engages', 'CDV'];
+            partyKeys.forEach(p => {
+                const tab = document.getElementById(`tab-${p}`);
+                if (p === partyKey) {
+                    tab.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500 text-slate-950 transition";
+                } else {
+                    tab.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 transition";
+                }
+            });
+
+            // Update Details
+            const data = partyData[partyKey];
+            const detailsBox = document.getElementById('party-details');
+            detailsBox.innerHTML = `
+                <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                    <span class="text-sm font-bold text-amber-400">${partyKey} — Dirigeant : ${data.leader}</span>
+                    <span class="text-[10px] bg-red-900 text-red-200 px-2 py-0.5 rounded font-bold">Ligne Rouge Infranchissable</span>
+                </div>
+                <p class="text-xs text-slate-200 font-semibold mt-2">${data.line}</p>
+                <div class="text-xs text-slate-300 space-y-1 mt-2">
+                    <p><strong>Exigences Budgétaires :</strong> ${data.demands}</p>
+                    <p><strong>Position Actuelle :</strong> ${data.status}</p>
+                </div>
+            `;
+        }
+
+        // Pension Simulator Logic
+        function calculatePensionImpact() {
+            const years = parseInt(document.getElementById('pension-years').value) || 0;
+            const age = parseInt(document.getElementById('pension-age').value) || 66;
+            const resultBox = document.getElementById('pension-result');
+
+            let message = "";
+            let alertClass = "";
+
+            const requiredYears = 35; // 7020 days rule
+
+            if (age < 66) {
+                const yearsEarly = 66 - age;
+                if (years < requiredYears) {
+                    const penaltyPercentage = yearsEarly * 5;
+                    message = `<strong class="text-red-600 block text-sm">MALUS DE PENSION APPLIQUÉ (-${penaltyPercentage}%)</strong>
+                    Vous ne remplissez pas la règle d'or des ${requiredYears} ans de carrière effective (${years} ans validés).
+                    Votre pension brute subira une amputation définitive de <strong>${penaltyPercentage}%</strong> (5% par année d'anticipation).`;
+                    alertClass = "border-red-300 bg-red-50 text-red-900";
+                } else {
+                    message = `<strong class="text-slate-800 block text-sm">PENSION ANTICIPÉE SANS MALUS</strong>
+                    Grâce à vos ${years} années de travail effectif (>= 35 ans / 7020 jours), vous échappez au Malus, malgré votre départ anticipé à ${age} ans.`;
+                    alertClass = "border-emerald-300 bg-emerald-50 text-emerald-900";
+                }
+            } else if (age > 66) {
+                if (years >= requiredYears) {
+                    const yearsExtra = age - 66;
+                    const bonusPercentage = yearsExtra * 5;
+                    message = `<strong class="text-emerald-700 block text-sm">BONUS PENSION ACCORDÉ (+${bonusPercentage}%)</strong>
+                    Vous remplissez les conditions requises et avez travaillé au-delà de l'âge légal de 66 ans. Vous bénéficiez d'une majoration pérenne de <strong>+${bonusPercentage}%</strong> sur votre rente.`;
+                    alertClass = "border-emerald-300 bg-emerald-50 text-emerald-900";
+                } else {
+                    message = `<strong class="text-amber-700 block text-sm">PAS DE BONUS PENSION</strong>
+                    Vous avez prolongé votre activité à ${age} ans, mais n'atteignez pas le seuil des 35 ans de travail effectif (${years} ans validés). Aucun bonus accordé.`;
+                    alertClass = "border-amber-300 bg-amber-50 text-amber-900";
+                }
+            } else {
+                message = `<strong class="text-slate-800 block text-sm">DÉPART À L'ÂGE LÉGAL (66 ANS)</strong>
+                Départ au taux standard sans Malus d'anticipation.`;
+                alertClass = "border-slate-300 bg-slate-100 text-slate-800";
+            }
+
+            resultBox.className = `p-3 border rounded-lg text-xs mt-3 ${alertClass}`;
+            resultBox.innerHTML = message;
+            resultBox.classList.remove('hidden');
+        }
+
+        // Regional Data Interactive Display
+        const regionalData = {
+            bxl: {
+                title: "Région de Bruxelles-Capitale — Gouvernement Boris Dilliès (MR)",
+                content: `
+                    <p>Après un blocage record de <strong>615 jours</strong> consécutif aux élections de juin 2024, le Gouvernement Dilliès (MR-PS-Les Engagés / Groen-Vooruit-Anders-CD&V) a prêté serment le 14 février 2026.</p>
+                    <p class="mt-2"><strong>Plan d'Austérité Régional :</strong> Confronté à un déficit hérité de 1,6 milliard d'euros, l'exécutif bruxellois a divisé le déficit par deux pour 2027 (719 M€) par un gel partiel du recrutement dans la fonction publique, la suspension du projet Métro 3 et la réduction des subsides associatifs.</p>
+                `
+            },
+            wal: {
+                title: "Région Wallonne — Gouvernement Adrien Dolimont (MR-Engagés)",
+                content: `
+                    <p>Le gouvernement wallon de coalition centriste-libérale poursuit sa trajectoire de redressement budgétaire : 268 millions € d'économies en 2025 suivis de 270 millions € supplémentaires en 2026.</p>
+                    <p class="mt-2"><strong>Fiscalité & Parastataux :</strong> Diminution des droits d'enregistrement à 3 % pour la première habitation, mais rationalisation drastique des agences parastatales (AVIQ, port de Liège) et alourdissement des taxes auto sur les véhicules polluants.</p>
+                `
+            },
+            fwb: {
+                title: "Fédération Wallonie-Bruxelles — Gouvernement Élisabeth Degryse",
+                content: `
+                    <p>Confrontée à un sous-financement de l'enseignement supérieur estimé à 18 % par rapport à la moyenne européenne, la FWB a acté une hausse historique des frais de scolarité universitaire.</p>
+                    <p class="mt-2"><strong>Minerval Porté à 1 194 € :</strong> À partir de la rentrée 2026-2027, le minerval de base passe de 835 € à 1 194 € pour près de 58 % des étudiants, déclenchant d'importantes grèves étudiantes en mars 2026.</p>
+                `
+            },
+            cpas: {
+                title: "Pouvoirs Locaux & CPAS — L'Onde de Choc Sociale",
+                content: `
+                    <p>La fin de l'illimitation des allocations de chômage pousse des dizaines de milliers de personnes exclues de l'ONEM vers les CPAS communaux pour réclamer le Revenu d'Intégration Sociale (RIS).</p>
+                    <p class="mt-2"><strong>Montants du RIS (Septembre 2026) :</strong> Isolés : 1 367,34 €/mois — Cohabitants : 911,56 €/mois — Charge de famille : 1 847,89 €/mois. Les communes wallonnes et bruxelloises étouffent financièrement sous la charge.</p>
+                `
+            }
+        };
+
+        function showRegionDetail(key) {
+            const data = regionalData[key];
+            const display = document.getElementById('region-display-box');
+            if (data) {
+                display.innerHTML = `
+                    <h4 class="font-bold text-slate-900 text-sm border-b border-slate-200 pb-2">${data.title}</h4>
+                    <div class="text-xs text-slate-700 leading-relaxed mt-2">${data.content}</div>
+                `;
+            }
+
+            // Button highlights
+            ['bxl', 'wal', 'fwb', 'cpas'].forEach(k => {
+                const btn = document.getElementById(`btn-reg-${k}`);
+                if (k === key) {
+                    btn.className = "p-4 rounded-xl border border-blue-500 bg-blue-50 transition text-left ring-2 ring-blue-400";
+                } else {
+                    btn.className = "p-4 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 transition text-left";
+                }
+            });
+        }
+
+        // Initialize Charts on DOM Ready
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initializing Party Selector & Regional Box
+            selectParty('MR');
+            showRegionDetail('bxl');
+
+            // 1. Chart Deficit & Debt
+            const ctxDeficit = document.getElementById('chartDeficit').getContext('2d');
+            new Chart(ctxDeficit, {
+                type: 'line',
+                data: {
+                    labels: ['2024', '2025', '2026 (Est)', '2027 (Proj)', '2028 (Proj)', '2031 (Proj)'],
+                    datasets: [
+                        {
+                            label: 'Déficit Public (% PIB)',
+                            data: [4.4, 5.2, 5.4, 5.5, 5.7, 6.3],
+                            borderColor: '#dc2626',
+                            backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Dette Publique (% PIB)',
+                            data: [105.2, 107.0, 109.5, 112.0, 115.4, 122.0],
+                            borderColor: '#0f172a',
+                            borderDash: [5, 5],
+                            fill: false,
+                            tension: 0.3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: { display: true, text: 'Déficit (% PIB)', font: { size: 10 } },
+                            min: 2,
+                            max: 8
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: { display: true, text: 'Dette (% PIB)', font: { size: 10 } },
+                            min: 95,
+                            max: 130,
+                            grid: { drawOnChartArea: false }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { font: { size: 11 } } }
+                    }
+                }
+            });
+
+            // 2. Chart OLO Yields
+            const ctxOlo = document.getElementById('chartOlo').getContext('2d');
+            new Chart(ctxOlo, {
+                type: 'bar',
+                data: {
+                    labels: ['2023', '2024', '2025', 'T1 2026', 'T3 2026', 'Nov 2026'],
+                    datasets: [
+                        {
+                            label: 'Taux OLO 10 Ans (%)',
+                            data: [3.15, 3.28, 3.60, 3.95, 4.20, 4.43],
+                            backgroundColor: '#d97706',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            min: 2,
+                            max: 5,
+                            title: { display: true, text: 'Rendement en %', font: { size: 10 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { font: { size: 11 } } }
+                    }
+                }
+            });
+
+            // 3. Chart Polling
+            const ctxPolling = document.getElementById('chartPolling').getContext('2d');
+            new Chart(ctxPolling, {
+                type: 'bar',
+                data: {
+                    labels: ['Flandre', 'Bruxelles', 'Wallonie'],
+                    datasets: [
+                        {
+                            label: 'Extrême Droite / Nationalistes (VB / N-VA)',
+                            data: [47.1, 11.2, 4.5],
+                            backgroundColor: '#0f172a'
+                        },
+                        {
+                            label: 'Gauche Radicale / Socialistes (PTB / PS)',
+                            data: [18.2, 43.8, 42.2],
+                            backgroundColor: '#dc2626'
+                        },
+                        {
+                            label: 'Centre-Droit / Libéraux (MR / Engagés / CD&V)',
+                            data: [26.5, 32.1, 41.5],
+                            backgroundColor: '#2563eb'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { stacked: true },
+                        y: { stacked: true, max: 100, title: { display: true, text: '% Intentions de vote' } }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { size: 10 } } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
