@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse Critique de la Couverture Médiatique : Coalition Arizona (2025-2026)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sand: {
+                            50: '#FAF8F5',
+                            100: '#F4F0EA',
+                            200: '#E6DEC3',
+                            800: '#4A433A',
+                            900: '#2C2722'
+                        },
+                        navy: {
+                            800: '#1E293B',
+                            900: '#0F172A'
+                        },
+                        accent: {
+                            blue: '#1D4ED8',
+                            amber: '#D97706',
+                            red: '#DC2626',
+                            emerald: '#059669'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Chart Container Styles strictly adhering to constraints */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .tab-active {
+            border-bottom: 3px solid #1D4ED8;
+            color: #1D4ED8;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-sand-50 text-slate-800 font-sans antialiased leading-relaxed min-h-screen flex flex-col">
+
+    <!-- Chosen Palette: Sovereign Slate & Warm Sand (Background: #FAF8F5, Neutral Card: #FFFFFF, Primary Text: #0F172A, Accent Blue: #1D4ED8, Accent Amber: #D97706, Accent Emerald: #059669, Accent Red: #DC2626) -->
+    <!-- Application Structure Plan: Navigabilité fluide organisée en 5 modules analytiques principaux (Aperçu & Budget, Bipolarité Médiatique, Game Frame vs Content, Impacts Sociaux & Climat, Indépendance & Prisme Externe). Cette architecture réorganise le rapport scientifique en une expérience exploratoire basée sur des tableaux comparatifs dynamiques, des graphiques Chart.js interactifs et des simulateurs de cadrage médiatique pour maximiser la compréhension des enjeux consociatifs belges. -->
+    <!-- Visualization & Content Choices:
+      1. Répartition de l'Effort Budgétaire -> Chart.js Doughnut -> Visualise la disproportion massive entre rigueur sociale (93.7%) et fiscalité du capital (6.3%).
+      2. Bipolarité Médiatique (Sinardet) -> Chart.js Radar & Matrice comparative dynamique -> Met en opposition les priorités éditoriales flamandes (comptables) et francophones (sociales).
+      3. Le Mythe des Plus-Values -> Diagramme en Barres Horizontales -> Compare la perception médiatique de la taxe (10Mrd€ imaginaires) au rendement réel net (500M€).
+      4. Prisme International (Presse Française) -> Chart.js Pie Chart -> Illustre le biais de sources francophones (75%+) déformant la lecture étrangère de la crise.
+      - Confirmation : AUCUNE balise SVG ni bibliothèque Mermaid JS n'est utilisée. Visualisations gérées par Chart.js sur Canvas HTML5 et éléments HTML5/Tailwind stylisés. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Header / Hero Section -->
+    <header class="bg-navy-900 text-white border-b-4 border-accent-amber pt-8 pb-12 px-4 sm:px-6 lg:px-8 shadow-md">
+        <div class="max-w-7xl mx-auto text-center sm:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+                <div class="inline-block bg-accent-amber text-navy-900 font-bold text-xs uppercase px-3 py-1 rounded-full mb-3">
+                    Observatoire de la Presse & Politique Belge (2025-2026)
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
+                    Analyse Critique : La Coalition Arizona
+                </h1>
+                <p class="mt-3 text-slate-300 text-base sm:text-lg max-w-3xl">
+                    Déconstruction du cadrage médiatique, des récits de crise budgétaire et de la fragmentation consociative des espaces publics en Belgique.
+                </p>
+            </div>
+            <div class="bg-navy-800 p-4 rounded-xl border border-slate-700 text-center flex flex-col justify-center min-w-[200px]">
+                <span class="text-xs uppercase text-slate-400 font-semibold tracking-wider">Effort Budgétaire 2029</span>
+                <span class="text-3xl font-black text-accent-amber mt-1">23,3 Mrd €</span>
+                <span class="text-xs text-slate-300 mt-1">dont 10 Mrd € en impasse finale</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Key Metrics Ribbon -->
+    <section class="bg-white border-b border-sand-200 py-4 px-4 sm:px-6 lg:px-8 shadow-sm">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div class="p-2">
+                <span class="block text-2xl font-bold text-navy-900">5 Partis</span>
+                <span class="text-xs text-slate-500 font-medium">N-VA, MR, Les Engagés, CD&V, Vooruit</span>
+            </div>
+            <div class="p-2 border-l border-sand-200">
+                <span class="block text-2xl font-bold text-accent-blue">2 Sphères</span>
+                <span class="text-xs text-slate-500 font-medium">Espaces publics étanches (VRT vs RTBF)</span>
+            </div>
+            <div class="p-2 border-l border-sand-200">
+                <span class="block text-2xl font-bold text-accent-red">132.000</span>
+                <span class="text-xs text-slate-500 font-medium">Chômeurs menacés de basculement CPAS</span>
+            </div>
+            <div class="p-2 border-l border-sand-200">
+                <span class="block text-2xl font-bold text-accent-amber">3x Plus</span>
+                <span class="text-xs text-slate-500 font-medium">Sources francophones citées par la presse FR</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-sand-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex space-x-4 sm:space-x-8 overflow-x-auto py-3 no-scrollbar text-sm font-medium">
+                <button onclick="switchTab('tab-budget')" id="btn-tab-budget" class="tab-button tab-active whitespace-nowrap pb-1 transition-colors">
+                    1. Récit Budgétaire & Restructuration
+                </button>
+                <button onclick="switchTab('tab-bipolarite')" id="btn-tab-bipolarite" class="tab-button whitespace-nowrap text-slate-600 hover:text-accent-blue pb-1 transition-colors">
+                    2. Bipolarité Médiatique (Sinardet)
+                </button>
+                <button onclick="switchTab('tab-gameframe')" id="btn-tab-gameframe" class="tab-button whitespace-nowrap text-slate-600 hover:text-accent-blue pb-1 transition-colors">
+                    3. Game Frame & Personnalisation
+                </button>
+                <button onclick="switchTab('tab-socio')" id="btn-tab-socio" class="tab-button whitespace-nowrap text-slate-600 hover:text-accent-blue pb-1 transition-colors">
+                    4. Impacts Sociaux & Climat
+                </button>
+                <button onclick="switchTab('tab-press')" id="btn-tab-press" class="tab-button whitespace-nowrap text-slate-600 hover:text-accent-blue pb-1 transition-colors">
+                    5. Presse & Regard Extérieur
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- SECTION 1: BUDGET & RESTRUCTURATION -->
+        <section id="tab-budget" class="tab-content block space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-sand-200">
+                <h2 class="text-2xl font-bold text-navy-900 border-b-2 border-accent-blue pb-3">
+                    La Construction Discursive de l'Accord : Entre Urgence et Néolibéralisme Autoritaire
+                </h2>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                    Cette section analyse comment l'accord de gouvernement de février 2025 et le conclave budgétaire de l'automne 2026 ont été introduits dans le débat public. La presse a largement absorbé la rhétorique de la <strong>« pathologisation de la dette »</strong> (trajectoire vers 130 % du PIB en 2038) et le postulat <em>TINA (There Is No Alternative)</em>. Cependant, le décryptage académique révèle une stratégie explicite de <strong>« politique des caisses vides »</strong> : organiser l'assèchement des recettes fiscales directes pour imposer le démantèlement des protections sociales et imposer la discipline de marché.
+                </p>
+
+                <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Chart Wrapper -->
+                    <div class="bg-sand-50 p-4 sm:p-6 rounded-xl border border-sand-200 flex flex-col items-center">
+                        <h3 class="text-base font-bold text-navy-900 mb-2 text-center">
+                            Répartition Stratégique de l'Effort Budgétaire (23,3 Mrd € d'ici 2029)
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-4 text-center">Source : Rapport d'Analyse / Données Gouvernementales</p>
+                        <div class="chart-container">
+                            <canvas id="budgetChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Explanation Card -->
+                    <div class="space-y-4">
+                        <div class="p-4 bg-sand-100 rounded-xl border-l-4 border-accent-blue">
+                            <h4 class="font-bold text-navy-900">1. Réformes Structurelles (8,2 Mrd € - 35%)</h4>
+                            <p class="text-sm text-slate-600 mt-1">Recul de l'âge de la retraite, durcissement du chômage et de la fonction publique statutaire.</p>
+                        </div>
+                        <div class="p-4 bg-sand-100 rounded-xl border-l-4 border-accent-amber">
+                            <h4 class="font-bold text-navy-900">2. Effets Retour Spéculatifs (7,9 Mrd € - 33,8%)</h4>
+                            <p class="text-sm text-slate-600 mt-1">Postulat fondé sur l'augmentation théorique du taux d'emploi par des incitations coercitives.</p>
+                        </div>
+                        <div class="p-4 bg-sand-100 rounded-xl border-l-4 border-slate-500">
+                            <h4 class="font-bold text-navy-900">3. Coupes Discrétionnaires (5,5 Mrd € - 23,6%)</h4>
+                            <p class="text-sm text-slate-600 mt-1">Rationalisation de l'administration fédérale, asile et dotations SNCB.</p>
+                        </div>
+                        <div class="p-4 bg-sand-100 rounded-xl border-l-4 border-accent-emerald">
+                            <h4 class="font-bold text-navy-900">4. Nouvelles Recettes Fiscales (1,5 Mrd € - 6,3%)</h4>
+                            <p class="text-sm text-slate-600 mt-1">Plafonnement et protection ciblée des revenus du capital et des grandes fortunes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Concept Highlight Box -->
+                <div class="mt-8 bg-navy-800 text-white p-6 rounded-xl shadow-inner">
+                    <h3 class="text-lg font-bold text-accent-amber flex items-center gap-2">
+                        <span>💡</span> Décodage Académique : Le Néolibéralisme Autoritaire
+                    </h3>
+                    <p class="mt-2 text-sm text-slate-300 leading-relaxed">
+                        Loin de signer un simple « retrait de l'État », le projet Arizona opère un redéploiement étatique interventionniste : pendant que les filets de sécurité sociale sont amputés, l'État renforce l'appareil répressif et sécuritaire. Le budget de la Défense progresse vers 2 % du PIB en 2029 (puis 2,5 % en 2034) grâce à un « Fonds Défense » dédié, créant un contraste saisissant avec la rigueur imposée aux services publics.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: BIPOLARITÉ MÉDIATIQUE -->
+        <section id="tab-bipolarite" class="tab-content hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-sand-200">
+                <h2 class="text-2xl font-bold text-navy-900 border-b-2 border-accent-blue pb-3">
+                    La Fracture Consociative : Flandre vs Wallonie/Bruxelles
+                </h2>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                    Conformément aux travaux du politologue Dave Sinardet, la Belgique ne possède pas d'espace public unifié. Le traitement de la crise budgétaire de l'automne 2026 met en lumière deux cadrages étanches : une presse flamande axée sur la <strong>rationalité comptable et le redressement moral</strong>, et une presse francophone centrée sur <strong>l'urgence sociale et le choc territorial asymétrique</strong>.
+                </p>
+
+                <!-- Interactive Comparison Matrix -->
+                <div class="mt-6">
+                    <div class="flex justify-center space-x-2 mb-6">
+                        <button onclick="setFramingView('all')" id="btn-view-all" class="px-4 py-2 text-xs font-bold rounded-lg bg-navy-800 text-white">Vue Comparative Side-by-Side</button>
+                        <button onclick="setFramingView('flanders')" id="btn-view-flanders" class="px-4 py-2 text-xs font-bold rounded-lg bg-sand-200 text-slate-700 hover:bg-sand-300">Prisme Flamand (VRT, De Standaard, De Tijd)</button>
+                        <button onclick="setFramingView('wallonia')" id="btn-view-wallonia" class="px-4 py-2 text-xs font-bold rounded-lg bg-sand-200 text-slate-700 hover:bg-sand-300">Prisme Francophone (RTBF, Le Soir, La Libre)</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="framing-container">
+                        <!-- Flemish Frame Box -->
+                        <div id="frame-flanders" class="bg-blue-50 border border-blue-200 p-6 rounded-xl space-y-4">
+                            <div class="flex items-center justify-between border-b border-blue-200 pb-3">
+                                <h3 class="text-lg font-extrabold text-blue-900">Flandre (Sphère Néerlandophone)</h3>
+                                <span class="bg-blue-200 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded">Clé : Rationalité</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-blue-950">Vision de la Rigueur :</h4>
+                                <p class="text-sm text-blue-900 mt-1">Un redressement moral nécessaire. La compétitivité et la discipline budgétaire sont érigées en impératifs de survie économique.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-blue-950">Figure de Bart De Wever :</h4>
+                                <p class="text-sm text-blue-900 mt-1">Dépeint en <em>Staatsman</em> (homme d'État) responsable luttant contre la rigidité et l'irresponsabilité francophone.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-blue-950">Sémantique de l'Activation :</h4>
+                                <p class="text-sm text-blue-900 mt-1">Les mesures dures sont qualifiées de « trajets de réintégration » (*re-integratietrajecten*) indispensables face au choc démographique.</p>
+                            </div>
+                        </div>
+
+                        <!-- Francophone Frame Box -->
+                        <div id="frame-wallonia" class="bg-red-50 border border-red-200 p-6 rounded-xl space-y-4">
+                            <div class="flex items-center justify-between border-b border-red-200 pb-3">
+                                <h3 class="text-lg font-extrabold text-red-900">Wallonie / Bruxelles (Sphère Francophone)</h3>
+                                <span class="bg-red-200 text-red-800 text-xs font-bold px-2.5 py-0.5 rounded">Clé : Urgence Sociale</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-red-950">Vision de la Rigueur :</h4>
+                                <p class="text-sm text-red-900 mt-1">Une attaque frontale contre les acquis sociaux et un plan imposé par une majorité idéologique de droite flamande.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-red-950">Figure de Bart De Wever :</h4>
+                                <p class="text-sm text-red-900 mt-1">Perçu comme le leader d'une droite radicale imposant une vision austéritaire et un détricotage de l'État-providence.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-red-950">Sémantique de l'Activation :</h4>
+                                <p class="text-sm text-red-900 mt-1">Focus sur la paupérisation, l'exclusion des chômeurs et le transfert de charges insupportable vers les CPAS locaux.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Radar Chart Visualizing Framing Intensity -->
+                <div class="mt-8 bg-sand-50 p-6 rounded-xl border border-sand-200">
+                    <h3 class="text-base font-bold text-navy-900 mb-2 text-center">
+                        Intensité des Cadrages Médias selon la Région
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: GAME FRAME VS ISSUE FRAME -->
+        <section id="tab-gameframe" class="tab-content hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-sand-200">
+                <h2 class="text-2xl font-bold text-navy-900 border-b-2 border-accent-blue pb-3">
+                    La Domination du Game Frame : Personnalisation et Diversions Fiscales
+                </h2>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                    La presse politique belge a fréquemment privilégié le <strong>Game Frame</strong> (la théâtralisation de la course au pouvoir, les disputes d'égos et les tactiques) au détriment de l'<strong>Issue Frame</strong> (l'analyse de fond des politiques publiques). L'affrontement entre Georges-Louis Bouchez (MR) et Bart De Wever (N-VA) est devenu le feuilleton central de l'automne 2026.
+                </p>
+
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Case Study 1: TVA Deadlock -->
+                    <div class="bg-sand-50 p-6 rounded-xl border border-sand-200 space-y-4">
+                        <div class="flex items-center gap-2 text-accent-amber font-bold text-sm uppercase">
+                            <span>⚖️</span> Cas d'Étude 1 : Le Blocage de la TVA
+                        </div>
+                        <h3 class="text-lg font-bold text-navy-900">La Réforme de la TVA à l'Épreuve du Veto Libéral</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Pour combler les 10 milliards d'euros manquants, De Wever proposait d'augmenter le taux normal de TVA de 21% à 22% et de réunifier les taux réduits (6% et 12%) à 9%. Georges-Louis Bouchez s'y est opposé catégoriquement dans une posture « 1 contre 4 ».
+                        </p>
+                        <div class="bg-white p-4 rounded-lg border border-sand-200 space-y-2 text-xs">
+                            <div class="flex justify-between font-semibold text-slate-700">
+                                <span>Taux Normal Proposé :</span>
+                                <span class="text-accent-blue">21% ➔ 22%</span>
+                            </div>
+                            <div class="flex justify-between font-semibold text-slate-700">
+                                <span>Taux Réduit Reconfiguré :</span>
+                                <span class="text-accent-blue">6% / 12% ➔ 9%</span>
+                            </div>
+                            <div class="flex justify-between font-semibold text-slate-700">
+                                <span>Posture Médiatisée MR :</span>
+                                <span class="text-accent-red">« Zéro hausse de taxes »</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Case Study 2: Plus-Values Illusion -->
+                    <div class="bg-sand-50 p-6 rounded-xl border border-sand-200 space-y-4">
+                        <div class="flex items-center gap-2 text-accent-emerald font-bold text-sm uppercase">
+                            <span>🔍</span> Cas d'Étude 2 : L'Illusion de la Taxe Capital
+                        </div>
+                        <h3 class="text-lg font-bold text-navy-900">Le Mythe de la Taxe sur les Plus-Values (10%)</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Présentée par la presse comme la « grande victoire de gauche » pour équilibrer la rigueur, l'analyse fiscale indépendante montre qu'il s'agit d'un symbole largement évidé par des exemptions (franchise de 1M€, déduction des moins-values).
+                        </p>
+
+                        <!-- Chart Horizontal Bar comparing perception vs reality -->
+                        <div class="chart-container" style="height: 180px;">
+                            <canvas id="plusValuesChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: IMPACTS SOCIAUX & CLIMAT -->
+        <section id="tab-socio" class="tab-content hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-sand-200">
+                <h2 class="text-2xl font-bold text-navy-900 border-b-2 border-accent-blue pb-3">
+                    Impacts Socio-Économiques et Biais Écologiques
+                </h2>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                    Au-delà des querelles de partis, les travaux critiques de la presse indépendante et académique mettent à jour les conséquences matérielles des réformes de l'Arizona : marchandisation de la protection sociale, report de charges sur les communes et dépolitisation du climat.
+                </p>
+
+                <!-- Interactive Accordion / Cards for Impacts -->
+                <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-sand-50 p-5 rounded-xl border border-sand-200 flex flex-col justify-between">
+                        <div>
+                            <span class="text-2xl">🚨</span>
+                            <h3 class="font-bold text-navy-900 mt-2">Chômage limité à 2 ans</h3>
+                            <p class="text-xs text-slate-600 mt-2">
+                                Menace directe sur 132.000 chômeurs. Risque de basculement vers le Revenu d'Intégration Sociale (CPAS) sous condition de ressources du ménage, entraînant une paupérisation invisible subie majoritairement par les femmes cohabitantes.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-sand-200 text-xs font-semibold text-accent-red">
+                            ➔ Surcharge financière transférée aux CPAS
+                        </div>
+                    </div>
+
+                    <div class="bg-sand-50 p-5 rounded-xl border border-sand-200 flex flex-col justify-between">
+                        <div>
+                            <span class="text-2xl">💼</span>
+                            <h3 class="font-bold text-navy-900 mt-2">Hyper-Flexibilisation</h3>
+                            <p class="text-xs text-slate-600 mt-2">
+                                Extension des flexi-jobs, abaissement de l'âge du travail étudiant avec plafond à 650 heures/an et fin du tiers-temps minimal. Stratégie de contournement permanent des conventions collectives paritaires.
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-sand-200 text-xs font-semibold text-accent-amber">
+                            ➔ Érosion de l'emploi standard sous statut
+                        </div>
+                    </div>
+
+                    <div class="bg-sand-50 p-5 rounded-xl border border-sand-200 flex flex-col justify-between">
+                        <div>
+                            <span class="text-2xl">🌱</span>
+                            <h3 class="font-bold text-navy-900 mt-2">Angle Mort Écologique</h3>
+                            <p class="text-xs text-slate-600 mt-2">
+                                Relégation du climat au second plan : prolongation des réacteurs nucléaires (Doel 4 / Tihange 3) sans chiffrage clair et rejet des objectifs contraignants de réduction de 47% des émissions d'ici 2030 (avertissement BNB noyé).
+                            </p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-sand-200 text-xs font-semibold text-accent-blue">
+                            ➔ Primauté accordée à l'industrie lourde
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CPAS Crisis Interactive Visualizer -->
+                <div class="mt-8 p-6 bg-sand-100 rounded-xl border border-sand-200">
+                    <h3 class="text-base font-bold text-navy-900 mb-2">
+                        Effet Domino sur les CPAS Communaux
+                    </h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        L'exclusion des allocations de chômage fédérales ne supprime pas la précarité : elle la déplace vers l'assistance sociale communale.
+                    </p>
+                    <div class="w-full bg-sand-200 rounded-full h-6 overflow-hidden flex font-bold text-xs text-white">
+                        <div class="bg-accent-blue flex items-center justify-center h-full" style="width: 45%;">
+                            Chômage Fédéral (45%)
+                        </div>
+                        <div class="bg-accent-amber flex items-center justify-center h-full" style="width: 35%;">
+                            Transfert CPAS (35%)
+                        </div>
+                        <div class="bg-accent-red flex items-center justify-center h-full" style="width: 20%;">
+                            Exclusion Totale (20%)
+                        </div>
+                    </div>
+                    <div class="mt-3 flex justify-between text-xs text-slate-500 font-medium">
+                        <span>Sécurité Sociale (Cotisations)</span>
+                        <span>Assistance Publique (Impôts Locaux)</span>
+                        <span>Précarité & Décrochage</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: INDÉPENDANCE & REGARD EXTÉRIEUR -->
+        <section id="tab-press" class="tab-content hidden space-y-8">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-sand-200">
+                <h2 class="text-2xl font-bold text-navy-900 border-b-2 border-accent-blue pb-3">
+                    Indépendance Journalistique & Le Prisme de la Presse Internationale
+                </h2>
+                <p class="mt-4 text-slate-700 leading-relaxed">
+                    La crise politique a intensifié les tensions entre le pouvoir et les rédactions. L'Association des Journalistes Professionnels (AJP) a dénoncé des tentatives d'ingérence politique directes. En parallèle, les médias étrangers (notamment français) posent un regard déformé sur la crise belge.
+                </p>
+
+                <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Left Column: Press Freedom Alerts -->
+                    <div class="space-y-4">
+                        <div class="p-5 bg-red-50 rounded-xl border border-red-200">
+                            <span class="text-xs uppercase font-bold text-accent-red tracking-wider">Ingérence Politique</span>
+                            <h3 class="text-base font-bold text-navy-900 mt-1">L'Affaire Galant & la RTBF</h3>
+                            <p class="text-sm text-slate-600 mt-2">
+                                La ministre de la Média Jacqueline Galant (MR) a publiquement appelé à modifier la direction de l'information de la RTBF pour « apporter une ligne un peu différente de l'autre côté de l'échiquier politique ». Une démarche jugée illibérale par l'AJP.
+                            </p>
+                        </div>
+
+                        <div class="p-5 bg-amber-50 rounded-xl border border-amber-200">
+                            <span class="text-xs uppercase font-bold text-accent-amber tracking-wider">Autocensure & Justice</span>
+                            <h3 class="text-base font-bold text-navy-900 mt-1">Procédures-Bâillons (SLAPP)</h3>
+                            <p class="text-sm text-slate-600 mt-2">
+                                Recrudescence des attaques en justice préventives par des acteurs économiques et politiques pour étouffer le journalisme d'investigation sur les finances publiques.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: UCLouvain/Oxford Research on French Media -->
+                    <div class="bg-sand-50 p-6 rounded-xl border border-sand-200 flex flex-col items-center">
+                        <h3 class="text-base font-bold text-navy-900 text-center">
+                            Sources Citées par la Presse Française sur la Crise Belge
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-2 text-center">Étude ISPOLE (UCLouvain) / Oxford (*Comparative European Politics*)</p>
+                        
+                        <div class="chart-container" style="height: 220px;">
+                            <canvas id="frenchMediaChart"></canvas>
+                        </div>
+
+                        <p class="text-xs text-slate-600 mt-4 leading-relaxed text-center">
+                            <strong>Le Prisme Déformant :</strong> En s'abreuvant à 78% auprès de sources francophones, la presse parisienne réduit la crise à un énième conflit linguistique communautaire, occultant le cœur de la crise : un débat macroéconomique fondamental sur la destruction de l'État-providence.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy-900 text-slate-400 py-6 border-t border-navy-800 text-xs text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>Application Interactive d'Analyse Critique Médiatique • Crise Politique Belge Coalition Arizona (2025-2026)</p>
+            <p class="mt-1 text-slate-500">Conçu pour l'exploration pédagogique et scientifique des sciences de la communication et du journalisme.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic for Interactivity and Chart.js -->
+    <script>
+        // Tab Navigation Logic
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Remove active style from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.remove('hidden');
+
+            // Activate button
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('tab-active');
+            activeBtn.classList.remove('text-slate-600');
+        }
+
+        // Interactive Framing View Toggle (Section 2)
+        function setFramingView(view) {
+            const container = document.getElementById('framing-container');
+            const frameFlanders = document.getElementById('frame-flanders');
+            const frameWallonia = document.getElementById('frame-wallonia');
+
+            if (view === 'flanders') {
+                frameFlanders.classList.remove('hidden');
+                frameWallonia.classList.add('hidden');
+                container.classList.remove('md:grid-cols-2');
+            } else if (view === 'wallonia') {
+                frameFlanders.classList.add('hidden');
+                frameWallonia.classList.remove('hidden');
+                container.classList.remove('md:grid-cols-2');
+            } else {
+                frameFlanders.classList.remove('hidden');
+                frameWallonia.classList.remove('hidden');
+                container.classList.add('md:grid-cols-2');
+            }
+        }
+
+        // Initialize Charts on DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Chart 1: Budget Breakdown (Doughnut)
+            const ctxBudget = document.getElementById('budgetChart').getContext('2d');
+            new Chart(ctxBudget, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Réformes Structurelles', 'Effets Retour Spéculatifs', 'Coupes Discrétionnaires', 'Nouvelles Recettes Capital'],
+                    datasets: [{
+                        data: [8.2, 7.9, 5.5, 1.5],
+                        backgroundColor: ['#1D4ED8', '#D97706', '#64748B', '#059669'],
+                        borderWidth: 2,
+                        borderColor: '#FFFFFF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                font: { size: 11 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.raw + ' Mrd €';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: Media Framing Radar
+            const ctxRadar = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctxRadar, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Rationalité Comptable', 
+                        'Urgence Sociale', 
+                        'Focalisation Game Frame', 
+                        'Défense Pouvoir d\'Achat', 
+                        'Activation Force de Travail', 
+                        'Critique Rigueur'
+                    ],
+                    datasets: [
+                        {
+                            label: 'Presse Flamande (VRT/De Standaard)',
+                            data: [90, 35, 75, 50, 95, 30],
+                            borderColor: '#1D4ED8',
+                            backgroundColor: 'rgba(29, 78, 216, 0.2)',
+                            pointBackgroundColor: '#1D4ED8'
+                        },
+                        {
+                            label: 'Presse Francophone (RTBF/Le Soir)',
+                            data: [40, 95, 80, 85, 40, 90],
+                            borderColor: '#DC2626',
+                            backgroundColor: 'rgba(220, 38, 38, 0.2)',
+                            pointBackgroundColor: '#DC2626'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#E2E8F0' },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+            // Chart 3: Plus-Values Illusion (Bar Horizontal)
+            const ctxPlusValues = document.getElementById('plusValuesChart').getContext('2d');
+            new Chart(ctxPlusValues, {
+                type: 'bar',
+                data: {
+                    labels: ['Récit / Perception Médias', 'Rendement Réel Estimé Net'],
+                    datasets: [{
+                        label: 'Impact Financier (Millions €)',
+                        data: [10000, 500],
+                        backgroundColor: ['#D97706', '#059669'],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.raw + ' Millions €';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // Chart 4: French Media Sources Breakdown (Pie)
+            const ctxFrench = document.getElementById('frenchMediaChart').getContext('2d');
+            new Chart(ctxFrench, {
+                type: 'pie',
+                data: {
+                    labels: ['Sources Francophones Belges', 'Sources Néerlandophones Belges'],
+                    datasets: [{
+                        data: [78, 22],
+                        backgroundColor: ['#DC2626', '#1D4ED8'],
+                        borderWidth: 2,
+                        borderColor: '#FFFFFF'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' }
+                    }
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
