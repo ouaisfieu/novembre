@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Observatoire de la Crise Politique Belge : La Coalition Arizona (2024-2026)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .tab-active {
+            border-bottom: 3px solid #1e3a8a;
+            color: #1e3a8a;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-200 selection:text-slate-900">
+
+    <!-- Header Navigation Fixe -->
+    <header class="sticky top-0 z-50 bg-slate-900 text-white shadow-lg border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🏛️</span>
+                    <div>
+                        <h1 class="text-lg font-bold tracking-tight leading-none text-amber-400">Observatoire Arizona</h1>
+                        <p class="text-xs text-slate-400">Autopsie de la Crise Politique & Budgétaire Belge</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-4 text-xs font-medium">
+                    <a href="#overview" class="hover:text-amber-400 transition">Aperçu</a>
+                    <a href="#elections" class="hover:text-amber-400 transition">Parlement</a>
+                    <a href="#macro" class="hover:text-amber-400 transition">Étau UE</a>
+                    <a href="#reforme" class="hover:text-amber-400 transition">Réformes</a>
+                    <a href="#wallonie" class="hover:text-amber-400 transition">Wallonie & CPAS</a>
+                    <a href="#social" class="hover:text-amber-400 transition">Front Social</a>
+                    <a href="#vetos" class="hover:text-amber-400 transition">Guerre des Vétos</a>
+                    <a href="#scenarios" class="hover:text-amber-400 transition">Scénarios</a>
+                </nav>
+                <div class="flex items-center">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500 text-white animate-pulse">
+                        ● Démission (Nov 2026)
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- Ticker d'indicateurs macroéconomiques -->
+        <div class="bg-slate-800 text-slate-300 text-xs py-1.5 border-t border-slate-700/50 overflow-x-auto">
+            <div class="max-w-7xl mx-auto px-4 flex items-center justify-between space-x-6 whitespace-nowrap">
+                <div class="flex items-center space-x-2">
+                    <span class="text-amber-400 font-semibold">Déficit Public 2025:</span>
+                    <span>-5,2% PIB</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-amber-400 font-semibold">Dette Souveraine:</span>
+                    <span>107,9% PIB</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-amber-400 font-semibold">Spread OLO 10 ans:</span>
+                    <span class="text-red-400 font-mono">106,6 bps (4,384%)</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-amber-400 font-semibold">Effort Requis UE:</span>
+                    <span>10 à 14 Mds €</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-amber-400 font-semibold">Note Moody's:</span>
+                    <span class="text-amber-300 font-bold">A1 (Dégradée de Aa3)</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Executive Summary Section -->
+        <section id="overview" class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="max-w-3xl">
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2.5 py-1 rounded">Rapport d'Analyse Intégré</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">L'Effondrement du Gouvernement De Wever I</h2>
+                <p class="text-slate-600 mt-3 leading-relaxed text-sm md:text-base">
+                    Le 2 novembre 2026, le Premier ministre Bart De Wever a présenté la démission de son gouvernement au roi Philippe. Cet acte consacre l'impasse totale du conclave budgétaire 2027 et la fin de la coalition « Arizona » (N-VA, MR, Les Engagés, CD&V, Vooruit). Enserrée entre la Procédure pour Déficit Excessif de la Commission européenne et la « guerre des vétos » entre partisans des coupes sociales et défenseurs de la justice fiscale, la Belgique traverse sa plus grave crise politico-financière depuis plus d'une décennie.
+                </p>
+            </div>
+
+            <!-- Key Metric Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+                <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-slate-500">Majorité Arizona</span>
+                        <span class="text-lg">⚖️</span>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900 mt-1">81 / 150</div>
+                    <p class="text-xs text-slate-500 mt-1">Sièges à la Chambre (Marge de +6)</p>
+                </div>
+
+                <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-red-700">Mur Budgétaire Fédéral</span>
+                        <span class="text-lg">💶</span>
+                    </div>
+                    <div class="text-2xl font-black text-red-700 mt-1">10,0 Mds €</div>
+                    <p class="text-xs text-red-600 mt-1">Économies minimum requises d'ici 2029</p>
+                </div>
+
+                <div class="p-4 bg-amber-50 rounded-lg border border-amber-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-amber-800">Délai Négociations</span>
+                        <span class="text-lg">⏳</span>
+                    </div>
+                    <div class="text-2xl font-black text-amber-900 mt-1">236 Jours</div>
+                    <p class="text-xs text-amber-700 mt-1">Pour former le gouvernement (Juin 24 - Fév 25)</p>
+                </div>
+
+                <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold text-blue-800">Front Social</span>
+                        <span class="text-lg">✊</span>
+                    </div>
+                    <div class="text-2xl font-black text-blue-900 mt-1">100 000+</div>
+                    <p class="text-xs text-blue-700 mt-1">Manifestants à Bruxelles & Grève Générale</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: ELECTIONS & ARITHMETIQUE PARLEMENTAIRE -->
+        <section id="elections" class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="border-b border-slate-200 pb-4 mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Genèse Politico-Électorale</span>
+                <h3 class="text-2xl font-bold text-slate-900">Le Séisme du 9 Juin 2024 & La Composition Arizona</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    Le scrutin de juin 2024 a consacré une droitisation du paysage politique belge, marquée par la victoire de la N-VA en Flandre et le basculement historique du MR en Wallonie. Explorez ci-dessous l'équilibre parlementaire et la répartition des partis.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Donut Chart Container -->
+                <div class="lg:col-span-5 flex flex-col items-center">
+                    <h4 class="text-sm font-semibold text-slate-700 mb-2">Répartition des 150 Sièges de la Chambre</h4>
+                    <div class="chart-container">
+                        <canvas id="coalitionChart"></canvas>
+                    </div>
+                    <div class="flex items-center space-x-4 mt-3 text-xs font-medium">
+                        <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-900 inline-block mr-1"></span> Arizona (81)</span>
+                        <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-slate-300 inline-block mr-1"></span> Opposition (69)</span>
+                    </div>
+                </div>
+
+                <!-- Table & Interactive Filter -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="flex flex-wrap gap-2 justify-between items-center bg-slate-50 p-3 rounded-lg border border-slate-200">
+                        <div class="space-x-1">
+                            <button onclick="filterParties('all')" id="btn-party-all" class="px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white">Tous</button>
+                            <button onclick="filterParties('arizona')" id="btn-party-arizona" class="px-3 py-1 text-xs font-semibold rounded bg-slate-200 text-slate-700 hover:bg-slate-300">Coalition Arizona</button>
+                            <button onclick="filterParties('opposition')" id="btn-party-opposition" class="px-3 py-1 text-xs font-semibold rounded bg-slate-200 text-slate-700 hover:bg-slate-300">Opposition</button>
+                        </div>
+                        <input type="text" id="partySearch" onkeyup="searchParties()" placeholder="Rechercher un parti..." class="px-3 py-1 text-xs border border-slate-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    </div>
+
+                    <div class="overflow-x-auto max-h-72 overflow-y-auto border border-slate-200 rounded-lg">
+                        <table class="w-full text-left text-xs text-slate-600">
+                            <thead class="bg-slate-100 text-slate-700 sticky top-0 uppercase font-semibold">
+                                <tr>
+                                    <th class="p-2.5">Parti</th>
+                                    <th class="p-2.5">Orientation / Famille</th>
+                                    <th class="p-2.5 text-center">Sièges</th>
+                                    <th class="p-2.5 text-center">% Voix</th>
+                                    <th class="p-2.5 text-center">Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody id="partyTableBody" class="divide-y divide-slate-200">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: L'ETAU BUDGETAIRE EUROPEEN (PDE & DSA) -->
+        <section id="macro" class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="border-b border-slate-200 pb-4 mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-red-600">Contrainte Macroéconomique & Dette</span>
+                <h3 class="text-2xl font-bold text-slate-900">L'Étau Européen : Procédure pour Déficit Excessif (PDE)</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    En juin 2024, la Commission européenne a placé la Belgique sous Procédure pour Déficit Excessif. En vertu du modèle <i>Debt Sustainability Analysis (DSA)</i>, le pays doit infléchir sa trajectoire sous peine de sanctions financières et de dégradation sévère par les agences de notation.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Multi-Axis Chart -->
+                <div class="lg:col-span-7">
+                    <h4 class="text-sm font-semibold text-slate-700 mb-2">Trajectoire du Déficit (% PIB) & de la Dette (2024-2028)</h4>
+                    <div class="chart-container">
+                        <canvas id="macroChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Sources : Banque Nationale de Belgique (BNB), Conseil Supérieur des Finances & Commission Européenne.</p>
+                </div>
+
+                <!-- Rating & Market Stress Indicators -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="bg-slate-900 text-white p-5 rounded-xl space-y-4">
+                        <h4 class="text-sm font-bold text-amber-400 uppercase tracking-wide border-b border-slate-700 pb-2">Sanction des Agences & Marchés</h4>
+                        
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="text-xs font-bold text-slate-300">Moody's (Avril 2026)</span>
+                                    <p class="text-xs text-slate-400">Dégradation de la note souveraine</p>
+                                </div>
+                                <span class="px-2.5 py-1 text-xs font-black bg-red-900/80 text-red-300 border border-red-700 rounded">Aa3 ➔ A1</span>
+                            </div>
+
+                            <div class="flex items-center justify-between border-t border-slate-800 pt-2">
+                                <div>
+                                    <span class="text-xs font-bold text-slate-300">Tension Obligataire (Spread OLO/Bund)</span>
+                                    <p class="text-xs text-slate-400">Écart de rendement OLO 10 ans vs Allemagne</p>
+                                </div>
+                                <span class="px-2.5 py-1 text-xs font-black bg-amber-900/80 text-amber-300 border border-amber-700 rounded">106,6 bps</span>
+                            </div>
+
+                            <div class="flex items-center justify-between border-t border-slate-800 pt-2">
+                                <div>
+                                    <span class="text-xs font-bold text-slate-300">Taux OLO à 10 Ans</span>
+                                    <p class="text-xs text-slate-400">Pic atteint début novembre 2026</p>
+                                </div>
+                                <span class="px-2.5 py-1 text-xs font-bold text-slate-200">4,384 %</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800 p-3 rounded-lg text-xs text-slate-300 leading-relaxed border border-slate-700">
+                            <strong>Le modèle DSA (Debt Sustainability Analysis) :</strong> Exige un ajustement budgétaire net ramenant le déficit sous 3 % (cible de résilience à 1,5 %) avec un plafonnement de la croissance des dépenses primaires nettes à 1 % en termes réels.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: LES 4 PILIERS DE REFORMES & SIMULATEUR MALUS PENSION -->
+        <section id="reforme" class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="border-b border-slate-200 pb-4 mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-600">Anatomie des Politiques Publiques</span>
+                <h3 class="text-2xl font-bold text-slate-900">Les 4 Piliers de l'Accord Arizona & Le Malus Pension</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    Qualifié par ses critiques de virage néolibéral autoritaire, le programme Arizona vise des réformes structurelles profondes sans repasser par le modèle traditionnel de concertation sociale. Explorez les mesures et testez le calculateur de pension.
+                </p>
+            </div>
+
+            <!-- Tabs Header -->
+            <div class="flex border-b border-slate-200 text-xs md:text-sm font-semibold space-x-4 overflow-x-auto">
+                <button onclick="switchTab('emploi')" id="tab-btn-emploi" class="py-2.5 px-3 tab-active whitespace-nowrap">💼 Marché du Travail</button>
+                <button onclick="switchTab('pensions')" id="tab-btn-pensions" class="py-2.5 px-3 text-slate-500 hover:text-slate-800 whitespace-nowrap">👴 Pensions & Malus</button>
+                <button onclick="switchTab('asile')" id="tab-btn-asile" class="py-2.5 px-3 text-slate-500 hover:text-slate-800 whitespace-nowrap">🛂 Asile & Migration</button>
+                <button onclick="switchTab('defense')" id="tab-btn-defense" class="py-2.5 px-3 text-slate-500 hover:text-slate-800 whitespace-nowrap">🛡️ Défense & Privatisations</button>
+            </div>
+
+            <!-- Tab Content Display -->
+            <div class="mt-6">
+                <!-- Tab 1: Emploi -->
+                <div id="tab-emploi" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center"><span class="mr-2">⏱️</span> Limitation du Chômage à 2 Ans (24 Mois)</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                Entrée en vigueur au 1er mars 2026. Fin des allocations de chômage illimitées dans le temps. Réduction du droit aux allocations d'insertion à 12 mois maximum pour les jeunes diplômés. Objectif d'un différenciel net de 500 €/mois entre travail et inactivité.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center"><span class="mr-2">🔄</span> Généralisation des Flexi-Jobs</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                Extension du système flexi-job à la quasi-totalité des secteurs économiques (sauf opt-out). Plafond de revenus défiscalisés surélevé de 12 000 € à 18 000 € par an, vivement contesté par les syndicats pour son effet de précarisation.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Pensions + Simulator -->
+                <div id="tab-pensions" class="hidden space-y-6">
+                    <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                        <h4 class="font-bold text-amber-900 text-sm">Instauration du "Malus Pension" à partir de 2027</h4>
+                        <p class="text-xs text-amber-800 mt-1">
+                            Remplacement du bonus pension par des pénalités définitives pour tout départ anticipé avant l'âge légal (66/67 ans) sans carrière de 35 ans accomplie (156 jours/an minimum).
+                        </p>
+                    </div>
+
+                    <!-- Simulator Widget -->
+                    <div class="bg-slate-900 text-white p-5 rounded-xl border border-slate-700 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-700 pb-2">
+                            <h4 class="text-sm font-bold text-amber-400">🧮 Simuler l'Impact du Malus Pension Arizona</h4>
+                            <span class="text-xs text-slate-400">Barème légal prévisionnel 2027</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="text-xs text-slate-300 font-medium">Âge de Départ Souhaité</label>
+                                <select id="simAge" onchange="calculateMalus()" class="mt-1 w-full bg-slate-800 text-white text-xs p-2 rounded border border-slate-700">
+                                    <option value="63">63 Ans (3 ans d'anticipation)</option>
+                                    <option value="64">64 Ans (2 ans d'anticipation)</option>
+                                    <option value="65">65 Ans (1 an d'anticipation)</option>
+                                    <option value="66">66 Ans (Âge légal)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-300 font-medium">Période du Départ</label>
+                                <select id="simPeriod" onchange="calculateMalus()" class="mt-1 w-full bg-slate-800 text-white text-xs p-2 rounded border border-slate-700">
+                                    <option value="2">2027 - 2030 (Taux : 2%/an)</option>
+                                    <option value="4">2031 - 2040 (Taux : 4%/an)</option>
+                                    <option value="5">Après 2040 (Taux : 5%/an)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-xs text-slate-300 font-medium">Pension Mensuelle Estimée (€)</label>
+                                <input type="number" id="simPension" value="1800" onchange="calculateMalus()" class="mt-1 w-full bg-slate-800 text-white text-xs p-2 rounded border border-slate-700">
+                            </div>
+                        </div>
+
+                        <!-- Result display -->
+                        <div class="bg-slate-800 p-4 rounded-lg flex items-center justify-between border border-slate-700">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Taux de Pénalité Malus :</span>
+                                <span id="resMalusRate" class="text-xl font-bold text-amber-400">6 %</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs text-slate-400 block">Nouvelle Pension Mensuelle Recalculée :</span>
+                                <span id="resPensionFinal" class="text-xl font-bold text-red-400">1 692 € / mois</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Asile -->
+                <div id="tab-asile" class="hidden space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center"><span class="mr-2">🚫</span> Doctrine du "Non-Accueil"</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                Choix assumé de réduire la prise en charge matérielle des demandeurs d'asile isolés, malgré les condamnations à répétition du Conseil d’État et les mises en garde des Nations Unies (HCR).
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center"><span class="mr-2">💶</span> Durcissement du Regroupement Familial</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                Seuil d'accès au regroupement familial surélevé de 2 131 € à 2 323 € mensuels nets (+10% par personne à charge). Conditionnement de l'octroi du RIS à un parcours d'intégration obligatoire.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Défense -->
+                <div id="tab-defense" class="hidden space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center"><span class="mr-2">🎖️</span> Trajectoire OTAN à 2% du PIB</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                Engagement à porter les dépenses de Défense à 2% du PIB d'ici 2029 (cible à 2,5% en 2034). Création d'un « Fonds de Défense » dédié.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <h4 class="font-bold text-slate-900 text-sm flex items-center"><span class="mr-2">🏛️</span> Privatisations d'Actifs Publics</h4>
+                            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                                Capitalisation du Fonds de Défense via la cession partielle de participations étatiques financières et industrielles (Belfius, Proximus, BNP Paribas Fortis).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: FEDERALISME ASYMETRIQUE & LE CAS WALLON -->
+        <section id="wallonie" class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="border-b border-slate-200 pb-4 mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Dynamic Régionale vs Fédérale</span>
+                <h3 class="text-2xl font-bold text-slate-900">Le Fédéralisme Asymétrique : L'Exception Wallonne</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    Pendant que le niveau fédéral s'enfonçait dans la paralysie, la coalition wallonne « Azur » (MR - Les Engagés) dirigée par Adrien Dolimont a fait voter un budget pluriannuel 2027-2029 en octobre 2026. Cependant, la réforme fédérale du chômage menace de transférer des charges massives sur les CPAS.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Walloon Budget Chart -->
+                <div class="lg:col-span-6">
+                    <h4 class="text-sm font-semibold text-slate-700 mb-2">Trajectoire du Solde Budgétaire Wallon (2026-2029)</h4>
+                    <div class="chart-container">
+                        <canvas id="wallonieChart"></canvas>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2 text-center">Inflexion budgétaire : Désindexation de 2% des subventions, vignette routière (90-125€) & suppression des provinces.</p>
+                </div>
+
+                <!-- CPAS Impact Widget -->
+                <div class="lg:col-span-6 space-y-4">
+                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                            <h4 class="text-sm font-bold text-slate-900">🚨 L'Onde de Choc sur les CPAS Communaux</h4>
+                            <span class="px-2 py-0.5 text-xs bg-red-100 text-red-700 font-bold rounded">Transfert de charges</span>
+                        </div>
+
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            L'exclusion des chômeurs après 2 ans provoque un report automatique vers le Revenu d'Intégration Sociale (RIS) géré par les CPAS, entraînant un risque d'asphyxie financière pour les communes.
+                        </p>
+
+                        <div class="grid grid-cols-3 gap-2 text-center pt-2">
+                            <div class="p-2 bg-white rounded border border-slate-200">
+                                <span class="text-xs text-slate-400 block">Nouveau RIS (Belgique)</span>
+                                <span class="text-base font-black text-slate-900">+30 000</span>
+                            </div>
+                            <div class="p-2 bg-white rounded border border-slate-200">
+                                <span class="text-xs text-slate-400 block">Wallonie</span>
+                                <span class="text-base font-black text-blue-600">+13 000</span>
+                            </div>
+                            <div class="p-2 bg-white rounded border border-slate-200">
+                                <span class="text-xs text-slate-400 block">Bruxelles</span>
+                                <span class="text-base font-black text-slate-700">+9 600</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-amber-50 border border-amber-200 rounded text-xs text-amber-900">
+                            <strong>Impact financier net :</strong> Une surcharge estimée à près de <strong>200 millions €/an</strong> pour les communes, très partiellement compensée par le mécanisme de droit de tirage fédéral.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: FRONT SOCIAL & CONTRE-BUDGET -->
+        <section id="social" class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="border-b border-slate-200 pb-4 mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-red-600">Mobilisation Syndicale & Alternatives</span>
+                <h3 class="text-2xl font-bold text-slate-900">Le Front Social & Le Contre-Budget de 21 Mds €</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    Écartés de la concertation sociale, les syndicats (CSC, FGTB) ont mobilisé plus de 100 000 personnes à Bruxelles et déposé un préavis de grève générale pour la fin novembre 2026. Ils opposent au « TINA » du gouvernement un contre-budget chiffré.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Government Plan -->
+                <div class="p-5 bg-red-50 rounded-xl border border-red-200 space-y-3">
+                    <div class="flex items-center justify-between border-b border-red-200 pb-2">
+                        <h4 class="font-bold text-red-900 text-sm">Plan Arizona (Économies sur les Dépenses)</h4>
+                        <span class="text-xs font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded">Focalisation Dépenses</span>
+                    </div>
+                    <ul class="text-xs text-red-800 space-y-2">
+                        <li class="flex items-start"><span class="mr-2">❌</span> Limitation des allocations de chômage à 24 mois.</li>
+                        <li class="flex items-start"><span class="mr-2">❌</span> Malus pension pour les départs anticipés.</li>
+                        <li class="flex items-start"><span class="mr-2">❌</span> Plafonnement de la norme de soins de santé INAMI à 2%.</li>
+                        <li class="flex items-start"><span class="mr-2">❌</span> Suppression des jours de maladie cumulables des fonctionnaires.</li>
+                    </ul>
+                </div>
+
+                <!-- Syndical Counter Budget -->
+                <div class="p-5 bg-emerald-50 rounded-xl border border-emerald-200 space-y-3">
+                    <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+                        <h4 class="font-bold text-emerald-900 text-sm">Contre-Budget Syndical (21 Mds €)</h4>
+                        <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Focalisation Recettes</span>
+                    </div>
+                    <ul class="text-xs text-emerald-800 space-y-2">
+                        <li class="flex items-start"><span class="mr-2">✅</span> Impôt sur la fortune et grands patrimoines (+5 Mds €).</li>
+                        <li class="flex items-start"><span class="mr-2">✅</span> Suppression des niches fiscales & exonérations patronales (+4 Mds €).</li>
+                        <li class="flex items-start"><span class="mr-2">✅</span> Taxation des surprofits énergétiques et bancaires (+6 Mds €).</li>
+                        <li class="flex items-start"><span class="mr-2">✅</span> Lutte renforcée contre la grande fraude fiscale (+6 Mds €).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: AUTOPSE DE LA GUERRE DES VETOS -->
+        <section id="vetos" class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="border-b border-slate-200 pb-4 mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-600">Novembre 2026 : Le Conclave du Crash</span>
+                <h3 class="text-2xl font-bold text-slate-900">Autopsie de la "Guerre des Vétos"</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    Lors du conclave pour le budget 2027, les positions doctrinaires irréconciliables des partenaires ont bloqué la négociation. Cliquez sur une mesure pour analyser les raisons du veto et son impact financier.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Horizontal Bar Chart -->
+                <div class="lg:col-span-6">
+                    <h4 class="text-sm font-semibold text-slate-700 mb-2">Impact Financier des Mesures au Coeur de la Discorde</h4>
+                    <div class="chart-container">
+                        <canvas id="vetoChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Interactive Veto Inspector Matrix -->
+                <div class="lg:col-span-6 space-y-3">
+                    <div onclick="inspectVeto('tva')" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-lg border border-slate-200 cursor-pointer transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-lg">🛒</span>
+                            <div>
+                                <h5 class="text-xs font-bold text-slate-900">Hausse TVA 21% ➔ 22% (+1,5 Md €)</h5>
+                                <p class="text-[11px] text-slate-500">Recette fiscale indirecte</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 text-[10px] font-bold bg-blue-100 text-blue-800 rounded">Veto MR</span>
+                    </div>
+
+                    <div onclick="inspectVeto('capital')" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-lg border border-slate-200 cursor-pointer transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-lg">📈</span>
+                            <div>
+                                <h5 class="text-xs font-bold text-slate-900">Taxe Plus-Values & Titres (+1,2 Md €)</h5>
+                                <p class="text-[11px] text-slate-500">Fiscalité du capital (Supernota)</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 text-[10px] font-bold bg-blue-100 text-blue-800 rounded">Veto MR & Voka</span>
+                    </div>
+
+                    <div onclick="inspectVeto('index')" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-lg border border-slate-200 cursor-pointer transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-lg">📊</span>
+                            <div>
+                                <h5 class="text-xs font-bold text-slate-900">Plafonnement Index Salaires & Alloc.</h5>
+                                <p class="text-[11px] text-slate-500">Saut d'index déguisé (+2,2 Mds €)</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 text-[10px] font-bold bg-red-100 text-red-800 rounded">Veto Vooruit / Engagés</span>
+                    </div>
+
+                    <div onclick="inspectVeto('inami')" class="p-3 bg-slate-50 hover:bg-slate-100 rounded-lg border border-slate-200 cursor-pointer transition flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-lg">🏥</span>
+                            <div>
+                                <h5 class="text-xs font-bold text-slate-900">Coupes INAMI & Norme Santé 2%</h5>
+                                <p class="text-[11px] text-slate-500">Abstention du Gouvernement le 19 oct.</p>
+                            </div>
+                        </div>
+                        <span class="px-2 py-1 text-[10px] font-bold bg-red-100 text-red-800 rounded">Veto Santé / Vooruit</span>
+                    </div>
+
+                    <!-- Detail Panel -->
+                    <div id="vetoDetailBox" class="p-4 bg-slate-900 text-white rounded-lg text-xs leading-relaxed mt-2 border border-slate-700">
+                        <span class="text-amber-400 font-bold block mb-1">👆 Cliquez sur une mesure ci-dessus</span>
+                        Sélectionnez un élément pour afficher l'analyse détaillée des veto partisans et la raison du crash de la coalition le 2 novembre à 1h du matin.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: SIMULATEUR DE SCENARIOS PROSPECTIFS -->
+        <section id="scenarios" class="bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200">
+            <div class="border-b border-slate-200 pb-4 mb-6">
+                <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Perspectives d'Avenir (Hiver 2026-2027)</span>
+                <h3 class="text-2xl font-bold text-slate-900">Simulateur des Scénarios de Sortie de Crise</h3>
+                <p class="text-slate-600 text-sm mt-1">
+                    La démission étant tenue en suspens par le Roi Philippe, la Belgique se trouve à la croisée des chemins constitutionnels. Explorez les trois options stratégiques et évaluez leur faisabilité.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Scenario A -->
+                <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                            <h4 class="font-bold text-slate-900 text-sm">A. Douzièmes Provisoires</h4>
+                            <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Gestion Dégradée</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                            Absence de budget voté au 31 décembre. Dépenses mensuelles bloquées à 1/12e du budget 2026 sans nouvelles politiques.
+                        </p>
+                    </div>
+                    <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs text-amber-900">
+                        <strong>Risque Majeur :</strong> Sanction immédiate des agences de notation, hausse brutale des taux OLO et procédure d'amende européenne.
+                    </div>
+                </div>
+
+                <!-- Scenario B -->
+                <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                            <h4 class="font-bold text-slate-900 text-sm">B. Recomposition "Anders"</h4>
+                            <span class="text-xs font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Majorité Droitie</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                            Remplacement de Vooruit par le parti libéral flamand <i>Anders</i> (ex-Open VLD). Coalition N-VA, MR, CD&V, Engagés, Anders.
+                        </p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded border border-blue-200 text-xs text-blue-900">
+                        <strong>Risque Majeur :</strong> Majorité hyper-étriquée (78 sièges), manque de légitimité (Anders à 5,4%) et paralyse par grève générale.
+                    </div>
+                </div>
+
+                <!-- Scenario C -->
+                <div class="p-5 bg-slate-50 rounded-xl border border-slate-200 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                            <h4 class="font-bold text-slate-900 text-sm">C. Élections Anticipées</h4>
+                            <span class="text-xs font-bold text-red-700 bg-red-100 px-2 py-0.5 rounded">Dissolution</span>
+                        </div>
+                        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                            Constat d'impasse absolue, dissolution de la Chambre et retour aux urnes début 2027.
+                        </p>
+                    </div>
+                    <div class="bg-red-50 p-3 rounded border border-red-200 text-xs text-red-900">
+                        <strong>Risque Majeur :</strong> Poussée des partis antisystème (Vlaams Belang en Flandre, PTB en Wallonie) rendant le pays totalement ingouvernable.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONCLUSION STRATEGIQUE -->
+        <section class="bg-slate-900 text-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-800">
+            <h3 class="text-xl font-bold text-amber-400 border-b border-slate-800 pb-3">Conclusion Stratégique & Leçons Institutionnelles</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4 text-xs text-slate-300 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-1">1. L'Incompatibilité Européenne</h4>
+                    <p>
+                        La régidité du modèle DSA européen impose des coupes budgétaires à somme nulle (10-14 Mds €) incompatibles avec le modèle consociatif belge fondé sur la recherche de compromis graduels.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-1">2. L'Impasse du Tout-Dépense</h4>
+                    <p>
+                        Le refus catégorique du MR de taxer le capital a fait porter tout le poids sur le travail et la santé, provoquant la révolte de la social-démocratie (Vooruit) et le mur syndical.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white text-sm mb-1">3. Le Poussée Confédéraliste</h4>
+                    <p>
+                        Le contraste entre la paralysie fédérale et l'efficacité des réformes wallonnes donne un argument puissant à la N-VA pour revendiquer le transfert définitif des compétences santé/emploi.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-6 border-t border-slate-800 text-xs text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>Observatoire d'Analyse Politico-Budgétaire Belge — Traitement des Données Scrutin 2024 & Exercices Budgétaires 2025-2027</p>
+            <p class="mt-1 text-slate-600">Application SPA interactive générée pour la restitution exhaustive du rapport Arizona.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Data Store
+        const partyData = [
+            { name: "N-VA", ideology: "Nationalisme flamand, Conservatisme", seats: 24, vote: "16.71%", coalition: true, color: "#1e3a8a" },
+            { name: "MR", ideology: "Libéralisme de droite", seats: 20, vote: "10.26%", coalition: true, color: "#2563eb" },
+            { name: "Vlaams Belang", ideology: "Extrême droite", seats: 20, vote: "13.77%", coalition: false, color: "#475569" },
+            { name: "PS", ideology: "Social-démocratie", seats: 16, vote: "8.04%", coalition: false, color: "#dc2626" },
+            { name: "PTB-PVDA", ideology: "Gauche radicale", seats: 15, vote: "9.86%", coalition: false, color: "#991b1b" },
+            { name: "Les Engagés", ideology: "Centre, Démocratie chrétienne", seats: 14, vote: "6.77%", coalition: true, color: "#ea580c" },
+            { name: "Vooruit", ideology: "Social-démocratie flamande", seats: 13, vote: "8.11%", coalition: true, color: "#b91c1c" },
+            { name: "CD&V", ideology: "Démocratie chrétienne flamande", seats: 11, vote: "7.98%", coalition: true, color: "#d97706" },
+            { name: "Anders (Open VLD)", ideology: "Libéralisme centriste", seats: 7, vote: "5.45%", coalition: false, color: "#94a3b8" },
+            { name: "Groen", ideology: "Écologie politique flamande", seats: 6, vote: "4.65%", coalition: false, color: "#16a34a" },
+            { name: "Ecolo", ideology: "Écologie politique francophone", seats: 3, vote: "2.93%", coalition: false, color: "#22c55e" },
+            { name: "DéFI", ideology: "Régionalisme francophone", seats: 1, vote: "1.20%", coalition: false, color: "#64748b" }
+        ];
+
+        // 1. Initialize Coalition Doughnut Chart
+        function initCoalitionChart() {
+            const ctx = document.getElementById('coalitionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['N-VA (24)', 'MR (20)', 'Les Engagés (14)', 'Vooruit (13)', 'CD&V (11)', 'Opposition (69)'],
+                    datasets: [{
+                        data: [24, 20, 14, 13, 11, 69],
+                        backgroundColor: ['#1e3a8a', '#2563eb', '#ea580c', '#b91c1c', '#d97706', '#e2e8f0'],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ' sièges';
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // 2. Initialize Macroeconomic Line Chart
+        function initMacroChart() {
+            const ctx = document.getElementById('macroChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2024', '2025', '2026 Proj.', '2027 Cible', '2028 (Inchangé)'],
+                    datasets: [
+                        {
+                            label: 'Déficit Public (% PIB)',
+                            data: [-4.4, -5.2, -5.0, -3.0, -5.7],
+                            borderColor: '#dc2626',
+                            backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                            borderWidth: 3,
+                            yAxisID: 'yDeficit',
+                            tension: 0.3,
+                            fill: true
+                        },
+                        {
+                            label: 'Dette Publique (% PIB)',
+                            data: [105.7, 107.9, 111.3, 112.5, 114.8],
+                            borderColor: '#1e3a8a',
+                            backgroundColor: 'transparent',
+                            borderWidth: 3,
+                            borderDash: [5, 5],
+                            yAxisID: 'yDette',
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yDeficit: {
+                            type: 'linear',
+                            position: 'left',
+                            title: { display: true, text: 'Déficit (% PIB)' },
+                            min: -7,
+                            max: 0
+                        },
+                        yDette: {
+                            type: 'linear',
+                            position: 'right',
+                            title: { display: true, text: 'Dette (% PIB)' },
+                            min: 100,
+                            max: 120,
+                            grid: { drawOnChartArea: false }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 3. Initialize Wallonia Chart
+        function initWallonieChart() {
+            const ctx = document.getElementById('wallonieChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['2026', '2027', '2028', '2029 Cible'],
+                    datasets: [{
+                        label: 'Solde Budgétaire Wallon (Millions €)',
+                        data: [-2016, -1200, -500, 15],
+                        backgroundColor: function(context) {
+                            const val = context.raw;
+                            return val < 0 ? '#ef4444' : '#10b981';
+                        },
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Solde: ' + context.raw + ' M€';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 4. Initialize Veto Chart
+        function initVetoChart() {
+            const ctx = document.getElementById('vetoChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Hausse TVA 22% (+1.5B)', 
+                        'Taxe Plus-values (+1.2B)', 
+                        'Plafond Index (+2.2B)', 
+                        'Coupe INAMI (-1.8B)'
+                    ],
+                    datasets: [{
+                        label: 'Volume Financier Bloqué (Milliards €)',
+                        data: [1.5, 1.2, 2.2, 1.8],
+                        backgroundColor: ['#2563eb', '#2563eb', '#dc2626', '#dc2626'],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // Populate Party Table
+        function renderPartyTable(data) {
+            const tbody = document.getElementById('partyTableBody');
+            tbody.innerHTML = '';
+            data.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.className = p.coalition ? 'bg-blue-50/50 font-medium' : 'hover:bg-slate-50';
+                tr.innerHTML = `
+                    <td class="p-2.5 font-bold text-slate-900">${p.name}</td>
+                    <td class="p-2.5 text-slate-600">${p.ideology}</td>
+                    <td class="p-2.5 text-center font-bold">${p.seats}</td>
+                    <td class="p-2.5 text-center">${p.vote}</td>
+                    <td class="p-2.5 text-center">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.coalition ? 'bg-blue-900 text-white' : 'bg-slate-200 text-slate-700'}">
+                            ${p.coalition ? 'Arizona' : 'Opposition'}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterParties(type) {
+            document.querySelectorAll('#elections button').forEach(b => {
+                if(b.id.startsWith('btn-party')) {
+                    b.className = "px-3 py-1 text-xs font-semibold rounded bg-slate-200 text-slate-700 hover:bg-slate-300";
+                }
+            });
+            document.getElementById(`btn-party-${type}`).className = "px-3 py-1 text-xs font-semibold rounded bg-slate-900 text-white";
+
+            if(type === 'all') renderPartyTable(partyData);
+            else if(type === 'arizona') renderPartyTable(partyData.filter(p => p.coalition));
+            else if(type === 'opposition') renderPartyTable(partyData.filter(p => !p.coalition));
+        }
+
+        function searchParties() {
+            const query = document.getElementById('partySearch').value.toLowerCase();
+            const filtered = partyData.filter(p => p.name.toLowerCase().includes(query) || p.ideology.toLowerCase().includes(query));
+            renderPartyTable(filtered);
+        }
+
+        // Switch Reform Tabs
+        function switchTab(tabId) {
+            ['emploi', 'pensions', 'asile', 'defense'].forEach(id => {
+                document.getElementById(`tab-${id}`).classList.add('hidden');
+                document.getElementById(`tab-btn-${id}`).className = 'py-2.5 px-3 text-slate-500 hover:text-slate-800 whitespace-nowrap';
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`tab-btn-${tabId}`).className = 'py-2.5 px-3 tab-active whitespace-nowrap';
+        }
+
+        // Pension Malus Calculator Logic
+        function calculateMalus() {
+            const age = parseInt(document.getElementById('simAge').value);
+            const ratePerYear = parseInt(document.getElementById('simPeriod').value);
+            const basePension = parseFloat(document.getElementById('simPension').value) || 0;
+
+            const yearsEarly = 66 - age;
+            const totalMalusRate = yearsEarly * ratePerYear;
+            const finalPension = basePension * (1 - (totalMalusRate / 100));
+
+            document.getElementById('resMalusRate').innerText = `${totalMalusRate} %`;
+            document.getElementById('resPensionFinal').innerText = `${Math.round(finalPension)} € / mois`;
+        }
+
+        // Inspect Veto Details
+        function inspectVeto(type) {
+            const box = document.getElementById('vetoDetailBox');
+            if(type === 'tva') {
+                box.innerHTML = `<strong class="text-amber-400">Veto Libéral (MR) sur la TVA :</strong> Georges-Louis Bouchez a refusé la hausse de 21% à 22% (1,5 Md €), refusant toute hausse de fiscalité indirecte touchant la consommation des ménages.`;
+            } else if(type === 'capital') {
+                box.innerHTML = `<strong class="text-amber-400">Veto MR & Patronat (Voka) sur le Capital :</strong> Refus strict de la taxe sur les plus-values (1,2 Md €) qualifiée de "Fiscale Horrorlijst", bloquant la justice fiscale demandée par le centre-gauche.`;
+            } else if(type === 'index') {
+                box.innerHTML = `<strong class="text-amber-400">Veto Vooruit / Les Engagés sur l'Index :</strong> Blocage de la proposition De Wever de plafonner l'indexation automatique au-delà de 4 000 €, qualifiée de saut d'index déguisé anti-travailleurs.`;
+            } else if(type === 'inami') {
+                box.innerHTML = `<strong class="text-amber-400">Impasse Sanitaire & INAMI :</strong> Le gouvernement s'est abstenu le 19 oct. sur le plan d'économie de 141,5 M€ proposé par la santé, exigeant 1,8 Md € de coupes, déclenchant la colère médicale et le veto socialiste.`;
+            }
+        }
+
+        // Initialize Charts on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            initCoalitionChart();
+            initMacroChart();
+            initWallonieChart();
+            initVetoChart();
+            renderPartyTable(partyData);
+            calculateMalus();
+        });
+    </script>
+</body>
+</html>
